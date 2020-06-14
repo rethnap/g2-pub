@@ -1,0 +1,15 @@
+
+extern "C" int32 printf(const char* format, ...);
+
+int foo()
+{
+    int a = 4;
+    if (a < 3) return 1;
+}
+
+int main()
+{
+    foo();
+
+    return 0;
+}

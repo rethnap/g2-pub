@@ -1,0 +1,29 @@
+#define CASE 2
+#if CASE == 0
+struct bar {
+} call(int a) {
+    bar r;
+    return r;
+}
+#elif CASE == 1
+struct bar {
+} call(int a);
+struct bar call(int a)
+ {
+    bar r;
+    return r;
+}
+
+#else
+struct outer {
+    enum bar {
+    } call(int a) {
+        bar r;
+        return r;
+    }
+};
+#endif
+int main()
+{
+    return 0;
+}

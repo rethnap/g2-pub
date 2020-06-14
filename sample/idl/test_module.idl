@@ -1,0 +1,7 @@
+export module letter;
+export enum class greek : int {
+    alpha = 0,
+    beta,
+    xam
+};
+

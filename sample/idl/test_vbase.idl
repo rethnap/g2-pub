@@ -1,0 +1,33 @@
+extern "C" int32 printf(const char* format, ...);
+
+class base {
+public:
+    int a = 10;
+};
+
+class B : public virtual base {
+public:
+    int b = 15;
+};
+
+class C : public virtual base {
+public:
+    int c = 20;
+};
+
+class derived : public B, public C {
+};
+
+int simple()
+{
+    derived d;
+    printf("a = %d\n", d.a);
+
+    return 0;
+
+}
+
+int main()
+{
+    return simple();
+}

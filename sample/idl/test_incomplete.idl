@@ -1,0 +1,12 @@
+
+template <bool> struct base;
+
+struct bar {
+    int;
+};
+
+int main()
+{
+    int;
+    return 0;
+}

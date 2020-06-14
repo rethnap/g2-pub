@@ -1,0 +1,62 @@
+extern "C" int32 printf(const char* format, ...);
+#if 1
+_Pragma("GCC diagnostic push")
+_Pragma("GCC diagnostic ignored \"-Wdeprecated\"")
+volatile int g_a = 0;
+_Pragma("GCC diagnostic pop")
+#endif
+// volatile int g_b = 1;
+// int min()
+// {
+//     return 3;
+// }
+// void show_min()
+// {
+//     printf("min is %d\n", min());
+// }
+// _Pragma("push_macro(\"min\")")
+// #undef min
+// double min()
+// {
+//     return 3.1;
+// }
+// void show_min2()
+// {
+//     printf("min is %g\n", min());
+// }
+// _Pragma("pop_macro(\"min\")")
+
+// static inline constexpr int min() { return 1; }
+// static inline constexpr double min() { return 1.0; }
+// __pragma(push_macro("min"))
+
+// __pragma(pop_macro("min"))
+
+#define X 1
+#define Y 2
+
+int push_pop() {
+   printf("X:%d\n",X);
+   printf("Y:%d\n",Y);
+   _Pragma("push_macro(\"X\")")
+   _Pragma("push_macro(\"Y\")")
+   printf("after push X:%d\n",X);
+   printf("after push Y:%d\n",Y);
+//
+   #define X 2
+   #define Y 3
+
+    printf("after redefine X:%d\n",X);
+    printf("after redefine Y:%d\n",Y);
+
+   _Pragma("pop_macro(\"X\")")
+   printf("after pop X:%d\n",X);
+   _Pragma("pop_macro(\"Y\")")
+   printf("after pop Y:%d\n",Y);
+    return 0;
+}
+int main()
+{
+    push_pop();
+    return 0;
+}

@@ -1,0 +1,34 @@
+extern "C" int32 printf(const char* format, ...);
+#define UNUSED(x) if(x) {}
+
+struct bar {
+    int a = 1;
+};
+int main()
+{
+    const bar B;
+    bar B2 = B;
+    // 4 = B.a;
+    // printf("hello") = 1;
+    const bar* p = &B;
+    char buffer[32];
+    const char* a = buffer;
+    ++a;
+    UNUSED(p)
+    // p->a = 4;
+    // B.a = 3;
+    printf("(B.a, B2.a) = (%d, %d)\n", B.a, B2.a);
+
+    int b = {3};
+    printf("b is %d\n", b);
+
+    {
+        int a = 3;
+        printf("int a = %d\n", a);
+    }
+    {
+        double a = 3;
+        printf("double a = %g\n", a);
+    }
+    return 0;
+}

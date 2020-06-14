@@ -1,0 +1,12 @@
+extern "C" int32 printf(const char* format, ...);
+
+int simple()
+{
+    volatile int a = 3;
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

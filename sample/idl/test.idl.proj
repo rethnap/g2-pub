@@ -1,0 +1,14 @@
+project(test)
+
+set(test_ROOT, "${test_ROOT_DIR}")
+
+support-lang(c#|c++)
+//lang-folder("${test_ROOT_DIR}/../../example/idl/cs/test/hello")
+add-library(test
+    common.idl
+    //fruit.idl
+    //hello.idl
+    boro.idl
+    //plant.idl
+    //animal.idl
+)

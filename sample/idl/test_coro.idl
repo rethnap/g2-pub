@@ -1,0 +1,16 @@
+
+void* f(int32 n)
+{
+    while (true) {
+        printf("n is : %d\n", n);
+        ++n;
+        co_await n;
+    }
+}
+
+int32 simple()
+{
+    f(5);
+    
+    return 0;
+}

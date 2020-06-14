@@ -1,0 +1,34 @@
+
+
+extern "C" int32 printf(const char* format, ...);
+
+// from <stdarg.h>
+typedef __builtin_va_list va_list;
+
+#define va_start(ap, param) __builtin_va_start(ap, param)
+#define va_end(ap)          __builtin_va_end(ap)
+#define va_arg(ap, type)    __builtin_va_arg(ap, type)
+
+extern "C" int32 vprintf(const char *format, va_list ap);
+//
+
+int format(const char* fmt, ...)
+{
+
+    va_list args;
+    va_start(args, fmt);
+    vprintf(fmt, args);
+    va_end(args);
+    return 0;
+}
+
+int32 simple()
+{
+    format("%s %d\n", "hello", 3);
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

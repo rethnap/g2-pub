@@ -1,0 +1,17 @@
+extern "C" int32 printf(const char* format, ...);
+
+inline void foo()
+{
+    printf("i'm :%s\n", __FUNCTION__);
+}
+
+int simple()
+{
+    foo();
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

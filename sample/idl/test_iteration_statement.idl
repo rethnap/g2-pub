@@ -1,0 +1,87 @@
+extern "C" int printf(const char* format, ...);
+#if !__idlidl__
+#include <initializer_list>
+#endif
+struct bar {
+    int a;
+    float b;
+};
+int test_for_range()
+{
+    int a[3] = { 3, 2, 1 };
+
+
+    for (auto& i : a) {
+        printf("%d\n", i);
+        i = 3 - i;
+    }
+    for (int i = 0; i < 3; ++i) {
+        printf("%d\n", a[i]);
+    }
+    bar v[2] = { {1, 2.3f}, {2, 5.7f}};
+    // for (auto& i : v) {
+    //     printf("%d:%g\n", i.a, i.b);
+    // }
+
+    for (int i = 0; i < 2; ++i) {
+        printf("%d:%g\n", v[i].a, v[i].b);
+    }
+
+    return 0;
+}
+
+int test_continue()
+{
+    int s = 0;
+    for (int i = 0; i< 10; ++i) {
+        if ((i % 2) == 0) continue;
+        s += i;
+    }
+
+    printf("s = %d\n", s);
+    s = 0;
+    int a[10] = {1, 2, 3, 4, 5, 6, 7, 8 ,9 , 10 };
+    for(auto & i : a) {
+        if ((i % 2) == 1) {
+            continue;
+        }
+        s += i;
+    }
+
+    printf("s = %d\n", s);
+
+    int k = 0;
+    s = 0;
+    while (k < 10) {
+    if ((k % 2) == 0) {
+        ++k;
+        continue;
+    }
+    s += k;
+    ++k;
+    }
+
+    printf("s = %d\n", s);
+
+    s = 0;
+    do {
+        if ((k % 2) == 1) {
+            ++k;
+            continue;
+        }
+        s += k;
+        ++k;
+    } while (k < 10);
+
+    printf("s = %d\n", s);
+
+
+    return 0;
+}
+
+int main()
+{
+    test_for_range();
+    test_continue();
+    return 0;
+}

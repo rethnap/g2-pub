@@ -1,0 +1,10 @@
+
+struct elliptic
+{
+    elliptic(...);
+};
+
+int main()
+{
+    return 0;
+}

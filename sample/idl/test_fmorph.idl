@@ -1,0 +1,62 @@
+#include "common.idl"
+
+
+int32 bar()
+{
+    printf("i'm bar():%s\n", "void");
+    return 0;
+}
+
+int32 bar(int32 a) {
+
+    printf("i'm bar(int32):%d\n", a);
+    return 1;
+}
+
+int32 bar(f64 a)
+{
+    printf("i'm bar(f64):%g\n", a);
+    return 2;
+}
+
+class basic {
+public:
+
+    int32 foo()
+    {
+        printf("i'm foo():%s\n", "void");
+        return 0;
+    }
+
+    int32 foo(int32 a) {
+
+        printf("i'm foo(int32):%d\n", a);
+        return 1;
+    }
+
+    int32 foo(f64 a)
+    {
+        printf("i'm foo(f64):%g\n", a);
+        return 2;
+    }
+
+};
+
+int32 simple()
+{
+    basic B;
+
+    B.foo();
+    B.foo(1);
+    B.foo(1.2);
+   bar(1.4);
+    bar(3);
+    bar();
+
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

@@ -1,0 +1,66 @@
+extern "C" int32 printf(const char* format, ...);
+
+int simple()
+{
+{
+    int8 a = 1;
+    int8 b = __builtin_rotateleft8(a, (int8)2);
+
+    printf("(a,b) := (%d, %d)\n", a, b);
+}
+
+{
+    int16 a = 1;
+    int16 b = __builtin_rotateleft16(a, (int16)3);
+
+    printf("(a,b) := (%d, %d)\n", a, b);
+}
+
+{
+    int32 a = 1;
+    int32 b = __builtin_rotateleft32(a, (int32)4);
+
+    printf("(a,b) := (%d, %d)\n", a, b);
+}
+
+{
+    int64 a = 1LL;
+    int64 b = __builtin_rotateleft64(a, 5LL);
+
+    printf("(a,b) := (%ld, %ld)\n",  a, b);
+}
+
+{
+    int8 a = (int8)-2;
+    int8 b = __builtin_rotateright8(a, (int8)2);
+
+    printf("(a,b) := (%d, %d)\n", a, b);
+}
+{
+    int16 a = (int16)-3;
+    int16 b = __builtin_rotateright16(a, (int16)3);
+
+    printf("(a,b) := (%d, %d)\n", a, b);
+}
+{
+    int a = -4;
+    int b = __builtin_rotateright32(a, (int32)4);
+
+    printf("(a,b) := (%d, %d)\n", a, b);
+}
+
+{
+    uint64 a = -5ULL;
+    uint64 b = __builtin_rotateright64(a, 5LL);
+
+    printf("(a,b) := (%lu, %lu)\n",  a, b);
+}
+
+    return 0;
+}
+
+
+int main()
+{
+    return simple();
+}

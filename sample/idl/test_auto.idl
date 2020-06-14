@@ -1,0 +1,36 @@
+
+extern "C" int32 printf(const char* format, ...);
+
+
+int32 simple()
+{
+    // auto b;
+        auto a0 = (int8)1;
+        auto a1 = (uint8)2;
+        auto a2 = (int16)3;
+        auto a3 = (uint16)4;
+        auto a4 = (int32)5;
+        auto a5 = (uint32)6;
+        auto a6 = (int64)7;
+        auto a7 = (uint64)8;
+        auto a8 = (f32)9.0f;
+        auto a9 = (f64)10.0;
+
+        printf("sizeof int8 = %lu\n"    , sizeof(a0));
+        printf("sizeof uint8 = %lu\n"   , sizeof(a1));
+        printf("sizeof int16 = %lu\n"   , sizeof(a2));
+        printf("sizeof uint16 = %lu\n"  , sizeof(a3));
+        printf("sizeof int32 = %lu\n"   , sizeof(a4));
+        printf("sizeof uint32 = %lu\n"  , sizeof(a5));
+        printf("sizeof int64 = %lu\n"   , sizeof(a6));
+        printf("sizeof uint64 = %lu\n"  , sizeof(a7));
+        printf("sizeof f32 = %lu\n"     , sizeof(a8));
+        printf("sizeof f64 = %lu\n"     , sizeof(a9));
+
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

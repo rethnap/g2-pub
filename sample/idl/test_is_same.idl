@@ -1,0 +1,36 @@
+extern "C" int printf(const char* format, ...);
+
+
+const char* b2s(bool v)
+{
+    return v ? "true" : "false";
+}
+#define str(x) #x
+
+
+#define is_same(x, y) \
+    printf("%s is same %s, (%s)\n", #x, #y, b2s(__is_same(x,y)));
+
+int simple()
+{
+    printf("%lu, %lu\n", sizeof(double), sizeof(long double));
+    is_same(double, long double);
+    is_same(long, long int);
+    is_same(unsigned long, unsigned long long);
+    is_same(unsigned long, uint64);
+    is_same(unsigned long long, uint64);
+    is_same(long int, long long int);
+    is_same(unsigned long, uint64);
+    is_same(unsigned long int, uint64);
+    is_same(unsigned long*, uint64*);
+    is_same(unsigned long int*, uint64*);
+    is_same(unsigned long int*, int64*);
+
+
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

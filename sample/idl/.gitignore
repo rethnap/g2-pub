@@ -1,0 +1,7 @@
+*.hpp
+*.cs
+*.idlc
+*.bin
+*.json
+*.csv
+*.a

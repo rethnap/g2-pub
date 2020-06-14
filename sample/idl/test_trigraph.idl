@@ -1,0 +1,11 @@
+extern "C" int printf(const char* format, ...);
+
+int main()
+{
+
+    int a = 1 ??! 4;
+    printf("1 | 4 = %d\n", a);
+    int v[1] = ??< 2 ??>;
+    printf("int v[1] = {2}: v[0] = %d\n", v[0]);
+    return 0;
+}

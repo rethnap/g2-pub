@@ -1,0 +1,7 @@
+extern "C" int32 printf(const char* format, ...);
+
+int simple()
+{
+    printf("hello world!\n");
+    return 0;
+}

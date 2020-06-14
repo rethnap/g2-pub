@@ -1,0 +1,11 @@
+
+extern "C" int32 printf(const char* format, ...);
+
+
+int main()
+{
+    long unsigned int a = 3;
+    printf("sizeof (long unsigned int) = %u\n", sizeof(long unsigned int));
+    printf("sizeof a = %u\n", sizeof(a));
+    return 0;
+}

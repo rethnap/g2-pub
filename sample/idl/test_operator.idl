@@ -1,0 +1,47 @@
+#include "common.idl"
+
+class base {
+public:
+   void operator++()
+   {
+        ++a;
+        printf("inc(a:%d)!\n", a);
+   }
+
+   void operator--()
+   {
+        --b;
+        printf("dec(b:%d)!\n", b);
+   }
+
+   void show()
+   {
+        printf("(a,b) = (%d, %d)\n", a, b);
+   }
+
+    int32 a = 1;
+    int32 b = 2;
+};
+
+int32 simple()
+{
+    base B;
+
+    B.show();
+   ++B;
+   --B;
+   --B;
+   --B;
+   ++B;
+//    B++;
+//    B--;
+
+    //assert(0);
+
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

@@ -1,0 +1,45 @@
+// expect PI as 0x400/*921FB54442D18
+
+//#define PI 3.14159265358979323846
+
+#include "common.idl"
+#if !__idlidl__
+#include <math.h>
+#endif
+
+//static_assert( 1 > 0, "hello");
+
+// int32 simple()
+// {
+//     f64 a = 3 + 0.14;
+//     printf("a = %g\n", a);
+//
+//     return -1;
+// }
+
+int32 simple()
+{
+    f64 N = 1.0;
+    f64 N2 = 1.0;
+
+    for (int32 i = 0; i < 8; ++i) {
+
+            N += 1.0;
+            N2 = N2 + 1.0;
+
+            printf("N:N2(%g:%g) at %d\n", N, N2, i);
+            f64 f0 = PI / N;
+
+            f64 s0 = sin(f0);
+            f64 c0 = cos(f0);
+
+            printf("PI/%g of (sin,cos, rad): (%g, %g, %g)\n", N, s0, c0, f0);
+    }
+
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

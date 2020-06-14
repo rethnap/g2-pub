@@ -1,0 +1,138 @@
+extern "C" int printf(const char* format, ...);
+extern "C++"
+{
+void* operator new(uint64 count);
+void* operator new [] (uint64 count);
+
+}
+#define FDEF 0
+#define UNUSED(x) if(x) {}
+
+class base {
+public:
+    base()
+    {
+        printf("i'm %s\n", __FUNCTION__);
+    }
+
+    virtual ~base()
+    {
+        printf("i'm %s\n", __FUNCTION__);
+    }
+
+    virtual int calc(int v)
+    {
+        int ret = 2 + v;
+        printf("base::%s(): %d\n", __FUNCTION__, ret);
+        return ret;
+    }
+    int a;
+    int b;
+
+};
+#define EVDTOR 0
+class derived : public base {
+public:
+    derived()
+    {
+        printf("i'm %s\n", __FUNCTION__);
+    }
+#if EVDTOR
+    virtual
+#endif
+    ~derived()
+    {
+        printf("i'm %s\n", __FUNCTION__);
+    }
+#if FDEF
+    int calc(int v) final
+{
+    int ret = 4 + v;
+    printf("derived::%s(): %d\n", __FUNCTION__, ret);
+    return ret;
+}
+#else
+    int calc(int v) final;
+#endif
+
+    int c;
+};
+
+#if !FDEF
+int derived::calc(int v)
+{
+    int ret = 4 + v;
+    printf("derived::%s(): %d\n", __FUNCTION__, ret);
+    return ret;
+}
+#endif
+int simple()
+{
+    derived d;
+    base* b = (base*)&d;
+     d.a = 2;
+     printf("d.a = %d\n", d.a);
+     d.b = 3;
+     d.c = 7;
+    printf("a, b = (%d, %d, %d)\n", d.a, d.b, d.c);
+    int n = b->calc(4);
+    UNUSED(n)
+    int a2 = d.calc(5);
+    UNUSED(a2)
+    return 0;
+}
+
+class abstract {
+public:
+    virtual int foo(int v) = 0;
+int a;
+int b;
+
+};
+
+class concrete : public abstract {
+public:
+    concrete()
+    {
+        printf("i'm %s\n", __FUNCTION__);
+    }
+    ~concrete()
+    {
+        printf("i'm %s\n", __FUNCTION__);
+    }
+    int foo(int v) final;
+    int c;
+};
+
+int concrete::foo(int v)
+{
+    int ret = 4 + v;
+    printf("derived::%s(): %d\n", __FUNCTION__, ret);
+    return ret;
+}
+
+int test_pure()
+{
+    // --raise CANNOT_INSTANTIATE_ABSTRACT_CLASS
+    // abstract A;
+    // abstract* A = new abstract;
+    // char buffer[32];
+    // abstract* A = new (buffer) abstract;
+    // new (buffer) abstract;
+    // raise--
+    concrete C;
+     C.a = 6;
+     C.b = 7;
+    printf("a, b = (%d, %d)\n", C.a, C.b);
+
+    C.foo(5);
+
+    return 0;
+}
+
+int main()
+{
+    // simple();
+    test_pure();
+    return 0;
+}

@@ -1,0 +1,21 @@
+
+extern "C" int printf(const char* format, ...);
+
+
+
+int test_format()
+{
+    int a = 3;
+    float b = 3.1f;
+    // printf("%d %f\n", a);
+
+    printf("%d %f\n", a, b, "unknown");
+
+    return 0;
+}
+
+int main()
+{
+    test_format();
+    return 0;
+}

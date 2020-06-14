@@ -1,0 +1,47 @@
+extern "C" int32 printf(const char* format, ...);
+
+int simple()
+{
+    #if __idlidl__ && 0
+{
+    f16 a = 1.2;
+    f16 b = __builtin_ceilf16(a);
+
+    printf("(a,b) := (%f, %f)\n", (int)a, (int)b);
+}
+#endif
+{
+    f32 a = 1.6f;
+    f32 b = __builtin_ceilf(a);
+
+    printf("(a,b) := (%f, %f)\n",  a, b);
+}
+
+{
+    f64 a = -1.7;
+    f64 b = __builtin_ceil(a);
+
+    printf("(a,b) := (%g, %g)\n", a, b);
+}
+
+{
+    f32 a = 1.6f;
+    f32 b = __builtin_floorf(a);
+
+    printf("(a,b) := (%f, %f)\n",  a, b);
+}
+
+{
+    f64 a = -1.7;
+    f64 b = __builtin_floor(a);
+
+    printf("(a,b) := (%g, %g)\n", a, b);
+}
+
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

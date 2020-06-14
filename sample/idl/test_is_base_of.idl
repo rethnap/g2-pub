@@ -1,0 +1,85 @@
+extern "C" int printf(const char* format, ...);
+
+enum class greek : int {
+    alpha = 0,
+    beta,
+    xam
+};
+
+class abstract {
+public:
+    virtual int foo() = 0;
+    int a = 3;
+};
+
+class concrete : public abstract {
+public:
+    int foo() final
+    {
+        return 0;
+    }
+    int a = 3;
+};
+
+class basic {
+public:
+    int a = 3;
+};
+
+class virt {
+public:
+    virtual ~virt()
+    {
+    }
+    virtual int foo()
+    {
+        return 0;
+    }
+};
+
+struct bar {
+    int a = 4;
+};
+
+union variant {
+    int a;
+    float b;
+};
+
+struct empty {
+};
+
+struct exception {
+    ~exception() noexcept(false)
+    {
+        throw "hello";
+    }
+};
+
+const char* b2s(bool v)
+{
+    return v ? "true" : "false";
+}
+#define str(x) #x
+
+
+#define is_base_of(x, y) \
+    printf("%s is base_of %s(%s)\n", #x, #y, b2s(__is_base_of(x,y)));
+
+
+int simple()
+{
+    greek g = greek::alpha;
+
+    is_base_of(abstract, concrete);
+    is_base_of(concrete, abstract);
+    is_base_of(basic,empty);
+    is_base_of(greek, int);
+
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

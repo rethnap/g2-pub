@@ -1,0 +1,277 @@
+
+extern "C" int32 printf(const char* format, ...);
+
+#if __idlidl__
+void* operator new(uint64 count);
+void* operator new [] (uint64 count);
+
+void operator delete(void* ptr);
+void operator delete [] (void* ptr);
+#endif
+
+#define show(i) \
+    printf("at %d: (z, x, y, ci, co) = (%u, %u, %u, %u, %u)\n",i, (uint32)z[i], (uint32)x[i], (uint32)y[i], (uint32)ci, (uint32)*co);
+
+void mprec_addb()
+{
+    uint8 *x;
+    uint8 *y;
+    uint8 *z;
+    uint8 ci=(uint8)0;
+    //uint8 co[1]; // hack to avoid reference operation
+    uint8* co = new uint8;
+
+    uint8 x0[4] = { (uint8)225, (uint8)176, (uint8)187, (uint8)218};
+    uint8 y0[4] = { (uint8)139, (uint8)110, (uint8)211, (uint8)212 };
+
+    ////uint8 z0[4] = {(uint8)0 , (uint8)0, (uint8)0, (uint8)0 };
+
+    x = x0;
+    y = y0;
+    z = new uint8[4]; // work-around stack uint8 z0[4]....
+
+    printf("x0 = {%u,%u, %u, %u}\n", (uint32)x[0], (uint32)x[1], (uint32)x[2], (uint32)x[3]);
+    printf("y0 = {%u,%u, %u, %u}\n", (uint32)y[0], (uint32)y[1], (uint32)y[2], (uint32)y[3]);
+
+
+    z[0] =__builtin_addcb(x[0], y[0], ci, co);
+    show(0);
+
+    ci = *co;
+    z[1] = __builtin_addcb(x[1], y[1], ci, co);
+    show(1);
+    ci = *co;
+    z[2] = __builtin_addcb(x[2], y[2], ci, co);
+    show(2);
+    ci = *co;
+    z[3] = __builtin_addcb(x[3], y[3], ci, co);
+    show(3);
+
+    printf("result :(%u, %u, %u, %u, %u)\n", (uint32)*co, (uint32)z[3], (uint32)z[2], (uint32)z[1], (uint32)z[0]);
+
+    delete[] z;
+    //delete co;
+}
+
+#if 1
+void mprec_adds()
+{
+    uint16 *x;
+    uint16 *y;
+    uint16 *z;
+    uint16 ci=(uint16)0;
+    //uint8 co[1]; // hack to avoid reference operation
+    uint16* co = new uint16;
+
+    uint16 x0[4] = { (uint16)41225, (uint16)52176, (uint16)43187, (uint16)39218};
+    uint16 y0[4] = { (uint16)45139, (uint16)38110, (uint16)29211, (uint16)55212 };
+
+    ////uint16 z0[4] = {(uint16)0 , (uint16)0, (uint16)0, (uint16)0 };
+
+    x = x0;
+    y = y0;
+    z = new uint16[4]; // work-around stack uint16 z0[4]....
+
+    printf("x0 = {%u,%u, %u, %u}\n", (uint32)x[0], (uint32)x[1], (uint32)x[2], (uint32)x[3]);
+    printf("y0 = {%u,%u, %u, %u}\n", (uint32)y[0], (uint32)y[1], (uint32)y[2], (uint32)y[3]);
+
+
+    z[0] =__builtin_addcs(x[0], y[0], ci, co);
+    show(0);
+
+    ci = *co;
+    z[1] = __builtin_addcs(x[1], y[1], ci, co);
+    show(1);
+    ci = *co;
+    z[2] = __builtin_addcs(x[2], y[2], ci, co);
+    show(2);
+    ci = *co;
+    z[3] = __builtin_addcs(x[3], y[3], ci, co);
+    show(3);
+
+    printf("result :(%u, %u, %u, %u, %u)\n", (uint32)*co, (uint32)z[3], (uint32)z[2], (uint32)z[1], (uint32)z[0]);
+
+    delete[] z;
+    delete co;
+}
+
+void mprec_addi()
+{
+    uint32 *x;
+    uint32 *y;
+    uint32 *z;
+    uint32 ci=(uint32)0;
+    //uint8 co[1]; // hack to avoid reference operation
+    uint32* co = new uint32;
+
+    uint32 x0[4] = { (uint32)1234412251, (uint32)2345521762, (uint32)3421431873, (uint32)1234392184};
+    uint32 y0[4] = { (uint32)2233451395, (uint32)2345381105, (uint32)3678292117, (uint32)2322552128 };
+
+    ////uint32 z0[4] = {(uint32)0 , (uint32)0, (uint32)0, (uint32)0 };
+
+    x = x0;
+    y = y0;
+    z = new uint32[4]; // work-around stack uint32 z0[4]....
+
+    printf("x0 = {%u,%u, %u, %u}\n", x[0], x[1], x[2], x[3]);
+    printf("y0 = {%u,%u, %u, %u}\n", y[0], y[1], y[2], y[3]);
+
+
+    z[0] =__builtin_addc(x[0], y[0], ci, co);
+    show(0);
+
+    ci = *co;
+    z[1] = __builtin_addc(x[1], y[1], ci, co);
+    show(1);
+    ci = *co;
+    z[2] = __builtin_addc(x[2], y[2], ci, co);
+    show(2);
+    ci = *co;
+    z[3] = __builtin_addc(x[3], y[3], ci, co);
+    show(3);
+
+    printf("result :(%u, %u, %u, %u, %u)\n", *co, z[3], z[2], z[1], z[0]);
+
+    delete[] z;
+    delete co;
+}
+
+////////////////////////////////////////////////////////////////////////
+void mprec_subb()
+{
+    uint8 *x;
+    uint8 *y;
+    uint8 *z;
+    uint8 ci=(uint8)0;
+    uint8* co = new uint8;
+
+    uint8 x0[4] = { (uint8)225, (uint8)176, (uint8)187, (uint8)218};
+    uint8 y0[4] = { (uint8)139, (uint8)110, (uint8)211, (uint8)212 };
+
+    ////uint8 z0[4] = {(uint8)0 , (uint8)0, (uint8)0, (uint8)0 };
+
+    x = x0;
+    y = y0;
+    z = new uint8[4]; // work-around stack uint8 z0[4]....
+
+    printf("x0 = {%u,%u, %u, %u}\n", (uint32)x[0], (uint32)x[1], (uint32)x[2], (uint32)x[3]);
+    printf("y0 = {%u,%u, %u, %u}\n", (uint32)y[0], (uint32)y[1], (uint32)y[2], (uint32)y[3]);
+
+
+    z[0] =__builtin_subcb(x[0], y[0], ci, co);
+    show(0);
+
+    ci = *co;
+    z[1] = __builtin_subcb(x[1], y[1], ci, co);
+    show(1);
+    ci = *co;
+    z[2] = __builtin_subcb(x[2], y[2], ci, co);
+    show(2);
+    ci = *co;
+    z[3] = __builtin_subcb(x[3], y[3], ci, co);
+    show(3);
+
+    printf("result :(%u, %u, %u, %u, %u)\n", (uint32)*co, (uint32)z[3], (uint32)z[2], (uint32)z[1], (uint32)z[0]);
+
+    delete[] z;
+    delete co;
+}
+void mprec_subs()
+{
+    uint16 *x;
+    uint16 *y;
+    uint16 *z;
+    uint16 ci=(uint16)0;
+    uint16* co = new uint16;
+
+    uint16 x0[4] = { (uint16)41225, (uint16)52176, (uint16)43187, (uint16)39218};
+    uint16 y0[4] = { (uint16)45139, (uint16)38110, (uint16)29211, (uint16)55212 };
+
+    ////uint16 z0[4] = {(uint16)0 , (uint16)0, (uint16)0, (uint16)0 };
+
+    x = x0;
+    y = y0;
+    z = new uint16[4]; // work-around stack uint16 z0[4]....
+
+    printf("x0 = {%u,%u, %u, %u}\n", (uint32)x[0], (uint32)x[1], (uint32)x[2], (uint32)x[3]);
+    printf("y0 = {%u,%u, %u, %u}\n", (uint32)y[0], (uint32)y[1], (uint32)y[2], (uint32)y[3]);
+
+
+    z[0] =__builtin_subcs(x[0], y[0], ci, co);
+    show(0);
+
+    ci = *co;
+    z[1] = __builtin_subcs(x[1], y[1], ci, co);
+    show(1);
+    ci = *co;
+    z[2] = __builtin_subcs(x[2], y[2], ci, co);
+    show(2);
+    ci = *co;
+    z[3] = __builtin_subcs(x[3], y[3], ci, co);
+    show(3);
+
+    printf("result :(%u, %u, %u, %u, %u)\n", (uint32)*co, (uint32)z[3], (uint32)z[2], (uint32)z[1], (uint32)z[0]);
+
+    delete[] z;
+    delete co;
+}
+
+void mprec_subi()
+{
+    uint32 *x;
+    uint32 *y;
+    uint32 *z;
+    uint32 ci=(uint32)0;
+    uint32* co = new uint32;
+
+    uint32 x0[4] = { (uint32)1234412251, (uint32)2345521762, (uint32)3421431873, (uint32)1234392184};
+    uint32 y0[4] = { (uint32)2233451395, (uint32)2345381105, (uint32)3678292117, (uint32)2322552128 };
+
+    ////uint32 z0[4] = {(uint32)0 , (uint32)0, (uint32)0, (uint32)0 };
+
+    x = x0;
+    y = y0;
+    z = new uint32[4]; // work-around stack uint32 z0[4]....
+
+    printf("x0 = {%u,%u, %u, %u}\n", x[0], x[1], x[2], x[3]);
+    printf("y0 = {%u,%u, %u, %u}\n", y[0], y[1], y[2], y[3]);
+
+
+    z[0] =__builtin_subc(x[0], y[0], ci, co);
+    show(0);
+
+    ci = *co;
+    z[1] = __builtin_subc(x[1], y[1], ci, co);
+    show(1);
+    ci = *co;
+    z[2] = __builtin_subc(x[2], y[2], ci, co);
+    show(2);
+    ci = *co;
+    z[3] = __builtin_subc(x[3], y[3], ci, co);
+    show(3);
+
+    printf("result :(%u, %u, %u, %u, %u)\n", *co, z[3], z[2], z[1], z[0]);
+
+    delete[] z;
+    delete co;
+}
+#endif
+
+int simple()
+{
+    mprec_addb();
+    mprec_adds();
+    mprec_addi();
+
+    mprec_subb();
+    mprec_subs();
+    mprec_subi();
+
+
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

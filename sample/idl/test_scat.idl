@@ -1,0 +1,17 @@
+
+extern "C" int32 printf(const char* format, ...);
+
+int32 simple()
+{
+
+    const char*s = "aaaa" "bbbb";
+
+    printf("%s\n",s);
+
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

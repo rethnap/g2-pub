@@ -1,0 +1,57 @@
+#include "common.idl"
+
+#define RANK 8
+int32 simple()
+{
+    int32* a = new int32 [RANK];
+    int32* b = new int32 [RANK];
+    int32 sum = 0;
+
+    for (int32 i = 0; i < RANK; ++i) {
+        a[i] = RANK - 1 - i;
+        printf("a[%d] = %d\n", i, a[i]);
+        sum += a[i];
+    }
+
+    __builtin_memcpy((void*)b, (void*)a , sizeof(int32) * RANK);
+
+    printf("sum is %d\n", sum);
+
+    printf("a---------------\n");
+    for (int32 j = 0; j < RANK; ++j) {
+        printf("a[%d] = %d\n", j, a[j]);
+    }
+
+    printf("[after copy a to b]\n");
+    printf("b---------------\n");
+
+    for (int32 k = 0; k < RANK; ++k) {
+        printf("b[%d] = %d\n", k, b[k]);
+    }
+
+    __builtin_memset(b, 0, sizeof(int32) * RANK);
+    //remark_todo("(void*)b --> not working!");
+    // __builtin_memset((void*)b, 0, RANK);
+
+    printf("[after fill 0 to b]\n");
+    printf("b---------------\n");
+
+    for (int32 l = 0; l < RANK; ++l) {
+        printf("b[%d] = %d\n", l, b[l]);
+    }
+
+    __builtin_memset(b, 2, sizeof(int32) * RANK);
+    printf("[after fill 2 to b]\n");
+    printf("b---------------\n");
+
+    for (int32 m = 0; m < RANK; ++m) {
+        printf("b[%d] = %d\n", m, b[m]);
+    }
+
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

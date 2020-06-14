@@ -1,0 +1,44 @@
+extern "C" int32 printf(const char* format, ...);
+
+class basic {
+public:
+    friend int bar(basic* );
+    friend void foo();
+public:
+    int32 a = 14;
+    int32 b = 15;
+     protected:
+    int blah = 16;
+
+};
+
+void foo()
+{
+    basic B;
+    B.a = 1;
+    B.b = 2;
+    B.blah = 3;
+    printf("%s: (blah) = (%d)\n", __FUNCTION__, B.blah);
+}
+
+int bar(basic* v)
+{
+     printf("%s: (blah) = (%d)\n", __FUNCTION__, v->blah);
+    return 0;
+}
+
+int32 simple()
+{
+    basic B;
+
+    B.a = 1;
+    B.b = 2;
+    bar(&B);
+    foo();
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

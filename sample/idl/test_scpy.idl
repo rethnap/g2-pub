@@ -1,0 +1,53 @@
+
+extern "C" int32 printf(const char* format, ...);
+
+int32 _strlen(const char* s)
+{
+   const char* c = s;
+   while (*c != '\0') {
+      ++c;
+   }
+   int64 r =  (c - s);
+   return (int)r;
+}
+
+int32 simple()
+{
+   const char* str = "hello world!";
+
+   int32 n = _strlen(str);
+   // int n = 12;
+   printf("length of '%s':= %d\n", str, n);
+   int32 i = 0;
+   const char* s = str;
+   char buffer[32];
+   char* c = buffer;
+
+   printf("s is '%s'\n", s);
+
+   while (*s != '\0') {
+     c[i] = *s++;
+      printf("char := <%c, %c>\n", c[i], *(s-1));
+      ++i;
+   }
+      printf("passed := %d\n", i);
+   #if 1
+
+   c[n] = '\0';
+   printf("copied: '%s'\n", buffer);
+   // //const char* e = str + n;
+
+   // c = buffer;
+   // //while (e > s) {
+   //    *c++ = *--e;
+   // //}
+   // *c = '\0';
+   // printf("copied:  '%s'\n", buffer);
+   #endif
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

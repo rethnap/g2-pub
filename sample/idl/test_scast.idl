@@ -1,0 +1,109 @@
+
+extern "C" int32 printf(const char* format, ...);
+
+#define FAIL_STATIC 0
+#define FAIL_REINTERPRET 0
+#define UNUSED(x) if(x) {}
+
+#if FAIL_STATIC
+void fail_static_cast()
+{
+    {
+        int a = 10;
+        char c[4] = {'a', 'b', 'c', 'd' };
+
+        int* q = (int*)c;
+        int* p = static_cast<int*>(c);
+    }
+        {
+        int a[4] = { 1, 2, 3, 4 };
+        uint32* b = static_cast<uint32*>(a);
+        printf("{%d, %d, %d, %d}\n", b[0], b[1], b[2], b[3]);
+        // printf("(a,b) = (%d, %g)\n", a, b);
+    }
+
+}
+#endif
+
+#if FAIL_REINTERPRET
+void fail_reinterpret_cast()
+{
+    int a = 3;
+    short b = reinterpret_cast<short>(a);
+}
+#endif
+
+
+void test_static_cast()
+{
+    if (1)
+    {
+        union U { int a; double b; } u;
+        u.b = 3.14;
+        void* x;
+        x = (void*)&u;
+        int* y = static_cast<int*>(x);
+        double* z = static_cast<double*>(x);
+
+        printf("(*y, *z) = (%d, %g)\n", *y, *z);
+        char* w = static_cast<char*>(x);
+        UNUSED(w)
+    }
+
+    {
+       float a = 3.14f;
+        int b = static_cast<int>(a);
+        printf("(a,b) = (%g, %d)\n", (double)a, b);
+    }
+
+    {
+        int a = 3;
+        double b = static_cast<double>(a);
+        printf("(a,b) = (%d, %g)\n", a, b);
+    }
+
+}
+void test_reinterpret_cast()
+{
+    struct S1 { int a; } s1;
+struct S2 { int a; protected: int b; } s2; // not standard-layout
+union U { int a; double b; } u;
+int arr[2];
+
+int* p1 = reinterpret_cast<int*>(&s1); // value of p1 is "pointer to s1.a" because s1.a
+                                       // and s1 are pointer-interconvertible
+UNUSED(p1);
+int* p2 = reinterpret_cast<int*>(&s2); // value of p2 is unchanged by reinterpret_cast and
+                                       // is "pointer to s2".
+UNUSED(p2);
+
+int* p3 = reinterpret_cast<int*>(&u);  // value of p3 is "pointer to u.a": u.a and u are
+                                       // pointer-interconvertible
+UNUSED(p3);
+
+double* p4 = reinterpret_cast<double*>(p3); // value of p4 is "pointer to u.b": u.a and u.b
+                                            // are pointer-interconvertible because both
+                                            // are pointer-interconvertible with u
+UNUSED(p4);
+
+int* p5 = reinterpret_cast<int*>(&arr); // value of p5 is unchanged by reinterpret_cast and
+                                        // is "pointer to arr"
+UNUSED(p5);
+
+}
+
+int main()
+{
+    #if FAIL_STATIC
+    fail_static_cast();
+    #endif
+
+    #if FAIL_REINTERPRET
+    fail_reinterpret_cast();
+    #endif
+
+    test_static_cast();
+    test_reinterpret_cast();
+
+    return 0;
+}

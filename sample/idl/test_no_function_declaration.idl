@@ -1,0 +1,24 @@
+
+extern "C" int32 printf(const char* format, ...);
+
+class basic {
+public:
+void foo()
+{
+    printf("hello\n");
+}
+};
+
+void basic::bar()
+{
+    printf("world\n");
+}
+
+
+int main()
+{
+    basic B;
+    B.foo();
+
+    return 0;
+}

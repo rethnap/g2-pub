@@ -1,0 +1,176 @@
+#define ENABLE_SS 0
+
+// #if ENABLE_SS
+#if !__idlidl__
+#include <compare>
+#endif
+extern "C" int printf(const char* format, ...);
+
+#define UNUSED(x) if(x) {}
+
+#define checki(e) \
+    e; printf("%s: %d\n", #e, a);
+
+#define checkl(e) \
+    e; printf("%s: %ld\n", #e, a);
+#define checkf(e) \
+    e; printf("%s: %g\n", #e, a);
+
+void check_int()
+{
+    int a = 3;
+    printf("a is %d\n", a);
+    checki(a <<= 2);
+    checki(a >>= 3);
+    checki(a <<= 5);
+    checki(a %= 7);
+    checki(a |= (1 << 31));
+    checki(a &= 0x80000000);
+    checki(a &= 0x7fffffff);
+
+    checki(a = 4 + 5);
+    checki(a = ~a + 1);
+    checki(a -= 314);
+    checki(a ^= 0xdeadbeef);
+
+}
+
+void check_int64()
+{
+    // int64 a = 1L << 32 * 314;
+
+    int64 a = (1L << 32) * 314;
+    printf("a is %ld\n", a);
+    checkl(a <<= 2);
+    checkl(a >>= 3);
+    checkl(a <<= 5);
+    checkl(a %= 7);
+    checkl(a |= (1L << 63));
+    checkl(a &= 0x8000000000000000L);
+    checkl(a &= 0x7fffffffffffffffL);
+
+    checkl(a = 4 + 5);
+    checkl(a = ~a + 1);
+    checkl(a -= 3141593);
+    checkl(a ^= 0xdeadbeefdeadbeefL);
+
+}
+
+void check_f32()
+{
+    // f32 a = 3.14f;
+    f32 a;
+    a = 3.14f;
+    printf("a is %f\n", a);
+
+    // checkf(a <<= 2);
+    // checkf(a >>= 3);
+    // checkf(a <<= 5);
+    // checkf(a %= 7);
+    // checkf(a |= (1 << 31));
+    // checkf(a &= 0x80000000);
+    // checkf(a &= 0x7fffffff);
+
+    // checkf(a = 4.12345f + 5.234567f);
+    // checkf(a = ~a + 1);
+    // checkf(a ^= 0xdeadbeef);
+
+    checkf(a += 29);
+
+    checkf(a -= 314);
+    checkf(a *= 7);
+    checkf(a /= 5);
+
+    checkf(a += 123456789876L);
+    checkf(a -= 98765432123456L);
+    checkf(a *= 78901234567891L);
+    checkf(a /= 5432109876532L);
+
+    checkf(a += 1.2f);
+    checkf(a -= 2.3f);
+    checkf(a *= 3.4f);
+    checkf(a /= 5.5f);
+
+    checkf(a += 1.2);
+    checkf(a -= 2.3);
+    checkf(a *= 3.4);
+    checkf(a /= 5.5);
+
+
+}
+
+void check_f64()
+{
+    // f32 a = 3.14f;
+    f64 a;
+    a = 3.14;
+    printf("a is %f\n", a);
+
+    // checkf(a <<= 2);
+    // checkf(a >>= 3);
+    // checkf(a <<= 5);
+    // checkf(a %= 7);
+    // checkf(a |= (1 << 31));
+    // checkf(a &= 0x80000000);
+    // checkf(a &= 0x7fffffff);
+
+    // checkf(a = 4.12345f + 5.234567f);
+    // checkf(a = ~a + 1);
+    // checkf(a ^= 0xdeadbeef);
+
+    checkf(a += 29);
+
+    checkf(a -= 314);
+    checkf(a *= 7);
+    checkf(a /= 5);
+
+    checkf(a += 123456789876L);
+    checkf(a -= 98765432123456L);
+    checkf(a *= 78901234567891L);
+    checkf(a /= 5432109876532L);
+
+    checkf(a += 1.2f);
+    checkf(a -= 2.3f);
+    checkf(a *= 3.4f);
+    checkf(a /= 5.5f);
+
+    checkf(a += 1.2);
+    checkf(a -= 2.3);
+    checkf(a *= 3.4);
+    checkf(a /= 5.5);
+
+
+}
+#define check_twc(x) { \
+    auto r = x; \
+    int8* p = (int8*)&r; \
+    printf("%s: %d\n", #x, *p); \
+}
+
+int test_twc()
+{
+    void* p = nullptr;
+    check_twc(3 <=>2);
+    check_twc(2 <=>3);
+    check_twc(2<=>2);
+    return 0;
+}
+
+int main()
+{
+    int8 a8 = 129;
+    uint16 a16 = 65537;
+    float bb = 98765432123456UL;
+    UNUSED(a8)
+    UNUSED(a16)
+    UNUSED((bool)bb)
+    check_int();
+    check_int64();
+    check_f32();
+
+    test_twc();
+
+    return 0;
+
+}
+

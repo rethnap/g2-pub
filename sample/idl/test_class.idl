@@ -1,0 +1,127 @@
+extern "C" int32 printf(const char* format, ...);
+
+#define ILLEGAL_MEM_INIT 0
+#define NON_MEMBER 0
+#define STATIC_MEMBER 0
+#define NC 0
+#define UNUSED(x) if(x) {}
+
+class basic {
+public:
+
+    basic(int k);
+    basic()
+#if NON_MEMBER
+     : k(5) // UNKNOWN_MEMBER_VARIABLE
+#elif STATIC_MEMBER
+    : s(6) // STATIC_MEMBER_VARIABLE_IN_CTOR_INITIALIZER
+#else
+    : c(4)
+#endif
+    {
+        b = 2;
+        ++a;
+        printf("i'm ctor of basic(%d, %d, %d/%d)!\n", a, b, c, s);
+    }
+    ~basic();
+
+    void show()
+    #if ILLEGAL_MEM_INIT
+    : b(1) //raise ILLEGAL_MEMBER_INITIALIZER
+    #endif
+    {
+        this->a = 7;
+        printf("i'm show!!\n\t(a,b) = (%d, %d)\n",a, b);
+    }
+
+   void outofscope();
+
+    int32 a = 0;
+    int32 b = 15;
+    int c;
+    static const int s;
+
+};
+
+// int basic::a = 4;
+const int32 basic::s = 9;
+basic::basic(int k) : c(k)
+{
+    printf("i'm ctor of basic(%d, %d, %d/%d)!\n", a, b, c, s);
+}
+basic::~basic()
+{
+    printf("i'm dtor of basic!\n");
+}
+void basic::outofscope()
+{
+    // int k = 3;
+    printf("defined outside of class-specifier!\n");
+}
+
+class rabbit {
+public:
+    rabbit(int a)
+    {
+        printf("Who Framed Roger Rabbit?(%d)\n", a);
+    }
+    ~rabbit()
+    {
+        printf("you did!\n");
+    }
+    void nc()
+    {
+        printf("rabbit:bar()\n");
+    }
+    void bar() const
+    {
+        printf("rabbit:bar()\n");
+    }
+    void foo() const;
+
+};
+
+void rabbit::foo() const
+{
+    // this->bar();
+    #if NC
+        nc();
+    #endif
+        bar();
+        printf("rabbit::foo()\n");
+}
+
+int32 simple()
+{
+    basic B;
+
+    B.outofscope();
+    basic B2(5);
+#if 1
+    B.a = 1;
+    B.b = 2;
+    B.show();
+    B.a += 12;
+    B.a += 3;
+    B.b -= 2;
+    B.show();
+    {
+        printf("i'm inner --begin!\n");
+        rabbit R(1);
+        R.foo();
+        printf("i'm inner --end!\n");
+    }
+
+   B.show();
+
+    printf("(B.a, B.b) = (%d, %d)\n", B.a, B.b);
+#endif
+    B.~basic();
+    printf("basic:s = %d\n", basic::s);
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

@@ -1,0 +1,57 @@
+
+
+extern "C" int32 printf(const char* format, ...);
+
+//#include "common.idl"
+
+#define check_has_attribute(x) printf("has-attribute(%s) = %d\n", # x, __has_attribute(x));
+#define check_is_identifier(x) printf("is-identifier(%s) = %d\n", # x, __is_identifier(x));
+#define check_cpp_attribute(x) printf("cpp-attribute(%s) = %d\n", # x, __has_cpp_attribute(x));
+#define check_cpp_attribute2(x) printf("cpp-attribute(%s) = %ld\n", # x, __has_cpp_attribute(x));
+
+#define check_has_feature(x) printf("has-feature(%s) = %d\n", # x, __has_feature(x));
+int32 simple()
+{
+    printf("current couner is : %d\n", __COUNTER__);
+    printf("current function name is : %s:%d\n", __FUNCTION__, __INCLUDE_LEVEL__);
+
+    printf("current couner is : %d\n", __COUNTER__);
+    printf("current couner is : %d\n", __COUNTER__);
+    printf("current couner is : %d\n", __COUNTER__);
+    printf("timestamp of file: %s\n", __TIMESTAMP__);
+    printf("clang major: %d\n", __clang_major__);
+    printf("clang minor: %d\n", __clang_minor__);
+    printf("clang version: %s\n", __clang_version__);
+
+    // check_is_identifier(for);
+    // check_is_identifier(printf);
+
+    check_has_attribute(aligned);
+    check_has_attribute(always_inline);
+    check_has_attribute(required);
+    check_cpp_attribute2(clang::fallthrough);
+    check_cpp_attribute(clang::required);
+
+// int ncxa = __has_cpp_attribute(clang::fallthrough);
+//     int ncxa2 = __has_cpp_attribute(clang::required);
+
+//     printf("cpp-attribute:'clang::falthrough' is %d, 'required' is %d\n", ncxa, ncxa2);
+
+    check_has_feature(cxx_rtti);
+    check_has_feature(sizeof);
+
+    #if __has_include("common.idl")
+      printf("has-include:'common.idl' is %d\n", 1);
+    #else
+      printf("has-include:'common.idl' is %d\n", 0);
+    #endif
+
+  printf("%s: include-level: %d\n", __FUNCTION__, __INCLUDE_LEVEL__);
+
+    return 1;
+}
+
+int main()
+{
+    return simple();
+}

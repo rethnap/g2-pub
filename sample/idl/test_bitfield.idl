@@ -1,0 +1,45 @@
+extern "C" int32 printf(const char* format, ...);
+
+#define INITIALIZER 1
+struct vault
+{
+#if INITIALIZER
+    unsigned int b0 : 4 = 1;
+    unsigned int b1 : 23 = 2;
+    uint32 b2       :  5 = 3;
+#else
+    unsigned int b0 : 4;
+    unsigned int b1 : 23;
+    uint32 b2       :  5;
+
+#endif
+    short v0;
+    short v1;
+    int v2;
+};
+
+int simple()
+{
+    vault v;
+    printf("(b0, b1, b2) : (%d, %d, %d)\n",v.b0, v.b1, v.b2);
+
+    v.b0 = 3;
+    v.b1 = 1723;
+    v.b2 = 4;
+    v.v0 = 5;
+    v.v1 = (int16)64;
+    v.v2 = -33;
+
+    printf("(b0, b1, b2) : (%d, %d, %d)\n",v.b0, v.b1, v.b2);
+
+    printf("(v0, v1, v2) : (%d, %d, %d)\n", v.v0, v.v1, v.v2);
+
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}
+
+

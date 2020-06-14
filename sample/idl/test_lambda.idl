@@ -1,0 +1,76 @@
+
+extern "C" int32 printf(const char* format, ...);
+#define UNUSED(x) if(x) {}
+
+struct bar {
+    int go();
+    int a = 1;
+};
+
+    int bar::go()
+    {
+        auto phi = [this] () -> int {
+            int old = a;
+            ++this->a;
+            // ++a;
+            printf("[%s]: %d->%d\n", "bar.go.phi", old, a);
+            return 0;
+        };
+        int ret = phi();
+        // auto phi = [*this] () ->void {
+        //     // this->a += 2;
+        //     printf("this->a: %d\n", this->a);
+        // };
+        // phi();
+        return ret;
+    }
+#if GLOBAL_LAMBDA
+auto kappa = [] () ->void {
+    printf("kappa!\n");
+};
+#endif
+
+int simple()
+{
+    #if GLOBAL_LAMBDA
+    kappa();
+    #endif
+    int c = 0;
+    auto lambda = [&c] (int v) -> int {
+        c += 1;
+        c -= 3;
+        printf("lambda: (c, v) = (%d, %d)\n", c, v);
+        return v + 1;
+    };
+    auto delta = [&] (int v) -> int {
+        c += 1;
+        printf("delta: (c, v) = (%d, %d)\n", c, v);
+        return v + 1;
+    };
+
+    auto chi = [=] (int v) -> int {
+        // c += 1;
+        return c - v;
+    };
+    printf("before declare tau: c = %d\n", c);
+    auto tau = [c] (int v) -> int {
+        // c += 1;
+        printf("tau: (c, v) = (%d, %d)\n", c, v);
+        return v + c;
+    };
+    int a = lambda(1) + delta(2) - chi(5);
+    int b = tau(4);
+    UNUSED(a);
+    UNUSED(b)
+
+    // printf("result (a, b, c) : (%d, %d, %d)\n", a, b, c);
+    bar B;
+    B.go();
+    printf("b.a = %d\n", B.a);
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

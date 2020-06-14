@@ -1,0 +1,28 @@
+extern "C" int printf(const char* format, ...);
+
+class basic {
+public:
+    int a;
+};
+
+// void simple()
+// {
+//     typedef int I;
+//     I x = 10;
+//     x.I::~I();
+//     x = 20;
+//     printf("x is %d\n", x);
+// }
+
+int main()
+{
+    simple();
+
+    basic b;
+    b.a = 3;
+
+    printf ("a: %d\n", b.a);
+    b.~basic();
+    printf ("a: %d\n", b.a);
+    return 0;
+}

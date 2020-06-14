@@ -1,0 +1,67 @@
+//#include "common.idl"
+
+extern "C" int32 printf(const char* format, ...);
+
+#define UNUSED(x) if(x) {}
+
+enum class company : uint16 {
+    apple = 1,
+    intel,
+    ms,
+    xam
+};
+
+const char* name(company c)
+{
+    switch(c) {
+    case company::apple:
+        return "apple";
+    case company::intel:
+        return "intel";
+    case company::ms:
+        return "ms";
+    //case 5:
+    break;
+
+    default:
+    // return "unknown";
+    break;
+    }
+    return "unknown";
+}
+enum float_denorm_style
+{
+    denorm_indeterminate = -1,
+    denorm_absent = 0,
+    denorm_present = 1
+};
+
+int simple()
+{
+        company c = company::xam;
+        company c1 = company::apple;
+        company c2 = company::intel;
+
+        const char* s1 = name(c1);
+        const char* s2 = name(c2);
+         printf("%s\n", s1);
+         printf("%s \n", s2);
+
+    for (int i = 0;i <= (int)company::xam; ++i) {
+          c = (company)i;
+          const char* s = name(c);
+          printf("%s: %d\n", s , i);
+    }
+    float_denorm_style style = denorm_absent;
+    float_denorm_style style2 = float_denorm_style::denorm_absent;
+
+    UNUSED(style)
+    UNUSED(style2)
+
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

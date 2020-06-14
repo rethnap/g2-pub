@@ -1,0 +1,41 @@
+extern "C" int printf(const char* format, ...);
+struct basic {
+    basic()
+    {
+        printf("%s\n", __FUNCTION__);
+    }
+    ~basic()
+    {
+        printf("%s\n", __FUNCTION__);
+    }
+    int a;
+};
+union U { int a; double b; } u;
+
+enum class greek : uint32 {
+    alpha = 1,
+    beta,
+    gamma
+};
+
+int main()
+{
+    // basic();
+    // printf("hello\n");
+    // int* p = int*(nullptr);
+    // int a = int(1, 2);
+    greek g = greek();
+    U();
+    // U(1);
+    U;
+    printf("%u\n", greek::gamma);
+    greek g2 = greek(greek::beta);
+    int a = int();
+    int b = int(1);
+    int c = int(1.2f);
+
+    printf("(%d, %d, %d, %u, %u)\n", a, b, c, (uint32)g, (uint32)g2);
+    // a.~decltype(a)();
+    return 0;
+
+}

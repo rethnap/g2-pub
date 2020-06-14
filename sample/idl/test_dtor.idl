@@ -1,0 +1,28 @@
+extern "C" int printf(const char* format, ...);
+
+template <class _Tp> _Tp&& __declval0(int);
+template <class _Tp> _Tp   __declval0(long);
+
+template <class _Tp>
+decltype(__declval0<_Tp>(0))
+declval() noexcept;
+
+struct bar {
+    bar()
+    {
+    }
+    ~bar()
+    {
+        printf("%s\n", __FUNCTION__);
+    }
+
+    int a;
+};
+int main()
+{
+    bool val = noexcept(declval<bar>().~bar());
+    printf("val = (%s)\n", val ? "true" : "false");
+    // bar B;
+    // B.~bar();
+    return 0;
+}

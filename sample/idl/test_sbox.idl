@@ -1,0 +1,18 @@
+#include <compare>
+
+#define check(x) { \
+    printf("%s: %d\n", #x, (int)(int8)x); \
+}
+
+extern "C" int32 printf(const char* format, ...);
+
+int main()
+{
+    void* p = nullptr;
+    // auto r = 3 <=> 2;
+    // printf("'3<=>2' := %d\n", r);
+    // check(3 <=>2);
+    // check(2 <=> 2);
+    // check(2 <=>3);
+    return 0;
+}

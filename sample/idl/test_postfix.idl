@@ -1,0 +1,24 @@
+extern "C" int printf(const char* format, ...);
+struct basic {
+    basic& check(int v)
+    {
+        if (v > a) {
+            printf("%d is greater than %d\n", v, a);
+        } else if (v == a) {
+            printf("%d is equal to %d\n", v, a);
+        } else {
+            printf("%d is less than %d\n", v, a);
+        }
+
+        return *this;
+    }
+    int a = 2;
+};
+
+int main()
+{
+    basic B;
+    B.check(1).check(2).check(3);
+
+    return 0;
+}

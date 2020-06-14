@@ -1,0 +1,69 @@
+extern "C" int32 printf(const char* format, ...);
+
+int bar = -3;
+int16 bear[2] = { (int16) 1, (int16) 2} ;
+int foo()
+{
+    static int i = -1;
+    return ++i;
+}
+
+class basic {
+public:
+    int x = 1;
+    int y = 2;
+
+    static int z;
+    static const int w = 4;
+};
+
+int basic::z = 3;
+
+int simple()
+{
+    foo();
+    for (int i = 0; i < 10; ++i) {
+        printf("static at%d: 'foo.i' is : %d\n", i, foo());
+        printf("global at%d: 'bar' is : %d\n", i, ++bar);
+    }
+
+    printf("g-array: (%d, %d)\n", bear[0], bear[1]);
+
+    basic B;
+
+    uint64 s = sizeof(B);
+    printf("sizeof basic = %lu, basic::z = %d\n", s, basic::z);
+    printf("sizeof basic = %lu, basic::w = %d\n", s, basic::w);
+
+    return 0;
+}
+
+int g_a = 1;
+int static_init()
+{
+    printf("%s\n", __FUNCTION__);
+    return ++g_a;
+}
+
+int test_init0()
+{
+    static int a = static_init();
+    return a;
+
+}
+
+int test_init()
+{
+    for (int i = 0; i < 3; ++i) {
+        int k = test_init0();
+        printf("(i, k) = (%d, %d)\n", i, k);
+    }
+    return 0;
+}
+
+int main()
+{
+    simple();
+    test_init();
+    return 0;
+}

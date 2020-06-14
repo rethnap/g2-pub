@@ -1,0 +1,79 @@
+extern "C" {
+#if __idlidl__
+typedef uint64 size_t;
+typedef int64 ssize_t;
+#endif
+
+int open(const char *pathname, int flags);
+ssize_t read(int fd, void *buf, size_t count);
+int close(int);
+
+int printf(const char* format, ...);
+int snprintf(char* str, size_t size, const char* format, ...);
+
+int getppid(void);
+char *strstr(const char *haystack, const char *needle);
+}
+
+#define O_RDONLY	     00
+
+bool is_debugger_present()
+{
+    static bool init = false;
+    static bool yes = false;
+
+    if (!init) {
+        // char name[1024] = {0};
+        char name[1024];
+        char buffer[1024];
+        __builtin_memset(name, 0, sizeof(name));
+        __builtin_memset(buffer, 0, sizeof(buffer));
+
+        snprintf(name, sizeof(name), "/proc/%d/cmdline", getppid());
+        int fd = open(name, O_RDONLY);
+        if (fd <= 0) {
+            printf("failed to open: %s(%d)\n", name, fd);
+            return false;
+        }
+
+        int n = read(fd, buffer, sizeof(buffer));
+
+        if (n > 0) {
+            printf("read %d bytes\n", n);
+            if('\n' == name[n - 1]) {
+                name[n - 1] = '\0';
+            }
+            printf("cmdline: %s\n", buffer);
+        } else {
+            printf("failed to read(%s:%d)\n", name, n);
+        }
+        close(fd);
+
+        yes = strstr(buffer, "gdb") || strstr(buffer, "lldb");
+        // printf("debugger present: %s\n", v);
+        init = true;
+    }
+
+    return yes;
+}
+
+int main(void)
+{
+        if (is_debugger_present()) {
+            printf("debugger present!\n");
+            asm("int $3");
+        } else {
+            printf("no debugger present!\n");
+        }
+
+        int a = 10;
+        int b = 15;
+        int c;
+        asm ("addl  %%ebx,%%eax"
+                             : "=r"(c)
+                             : "b"(a), "a"(b)
+                             );
+        printf("(a(%d) + b(%d) = %d\n", a, b, c);
+
+        return 0;
+}

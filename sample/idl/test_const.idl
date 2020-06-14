@@ -1,0 +1,33 @@
+extern "C" int32 printf(const char* format, ...);
+
+#define ASSIGN 0
+#define INC 1
+#define CINC 2
+
+#define CASE 4
+struct bar {
+    int a = 1;
+};
+int main()
+{
+    int a[4] = { 1, 2, 3, 4 };
+     const int* c = a;
+    int* const d = a;
+    int* e = nullptr;
+    // e = c;
+    *d = 5; // ok
+#if CASE == ASSIGN
+    *c = 0;
+#elif CASE == INC
+    ++*c;
+#elif CASE == CINC
+    ++d;
+#endif
+    for (int i = 0; i < 4; ++i) {
+        printf("%d: %d\n", i, a[i]);
+    }
+    // const bar B;
+    bar B;
+    B.a = 3;
+    return 0;
+}

@@ -1,0 +1,268 @@
+extern "C" int printf(const char* format, ...);
+#define UNUSED(x) if(x) {}
+
+enum class greek : int {
+    alpha = 0,
+    beta,
+    xam
+};
+
+class abstract {
+public:
+    virtual int foo() = 0;
+    int a = 3;
+};
+
+class concrete : public abstract {
+public:
+    int foo() final
+    {
+        return 0;
+    }
+    int a = 3;
+};
+
+class basic {
+public:
+    int a = 3;
+};
+
+class virt {
+public:
+    virtual ~virt()
+    {
+    }
+    virtual int foo()
+    {
+        return 0;
+    }
+};
+
+struct bar {
+    int a = 4;
+};
+
+union variant {
+    int a;
+    float b;
+};
+
+struct empty {
+};
+
+struct exception {
+    ~exception() noexcept(false)
+    {
+        throw "hello";
+    }
+};
+
+const char* b2s(bool v)
+{
+    return v ? "true" : "false";
+}
+#define str(x) #x
+#define check_type(x) \
+    printf("%12s: (enum(%s), class(%s), union(%s), object(%s), function(%s), scalar(%s)\n", \
+     #x, b2s(__is_enum(x)), b2s(__is_class(x)), b2s(__is_union(x)), b2s(__is_object(x)), b2s(__is_function(x)), b2s(__is_scalar(x)));
+#define same(x, y) \
+    printf("%s: (%s, %s)\n", b2s(__is_same(x, y)), #x, #y);
+
+#define scalar(x) \
+    printf("%s is scalar(%s)\n", #x, b2s(__is_scalar(x)));
+#define is_void(x) \
+    printf("%s is void(%s)\n", #x, b2s(__is_void(x)));
+
+#define is_integral(x) \
+    printf("%s is integral(%s)\n", #x, b2s(__is_integral(x)));
+
+#define is_float(x) \
+    printf("%s is float(%s)\n", #x, b2s(__is_floating_point(x)));
+
+#define is_array(x) \
+    printf("%s is array(%s)\n", #x, b2s(__is_array(x)));
+
+#define is_const(x) \
+    printf("%s is const(%s)\n", #x, b2s(__is_const(x)));
+
+#define is_volatile(x) \
+    printf("%s is volatile(%s)\n", #x, b2s(__is_volatile(x)));
+
+
+#define is_signed(x) \
+    printf("%s is signed(%s)\n", #x, b2s(__is_signed(x)));
+
+#define is_unsigned(x) \
+    printf("%s is unsigned(%s)\n", #x, b2s(__is_unsigned(x)));
+
+#define is_empty(x) \
+    printf("%s is empty(%s)\n", #x, b2s(__is_empty(x)));
+
+#define is_pointer(x) \
+    printf("%s is pointer(%s)\n", #x, b2s(__is_pointer(x)));
+
+#define is_reference(x) \
+    printf("%s is reference(%s)\n", #x, b2s(__is_reference(x)));
+
+#define is_fundamental(x) \
+    printf("%s is fundamental(%s)\n", #x, b2s(__is_fundamental(x)));
+
+
+#define is_compound(x) \
+    printf("%s is compound(%s)\n", #x, b2s(__is_compound(x)));
+
+#define is_abstract(x) \
+    printf("%s is abstract(%s)\n", #x, b2s(__is_abstract(x)));
+
+#define is_destructible(x) \
+    printf("%s is destructible(%s)\n", #x, b2s(__is_destructible(x)));
+
+#define is_trivially_destructible(x) \
+    printf("%s is trivially-destructible(%s)\n", #x, b2s(__is_trivially_destructible(x)));
+
+#define is_nothrow_destructible(x) \
+    printf("%s is nothrow-destructible(%s)\n", #x, b2s(__is_nothrow_destructible(x)));
+
+int simple()
+{
+    greek g = greek::alpha;
+    UNUSED((bool)g)
+    check_type(const greek);
+    check_type(basic);
+    check_type(variant);
+    check_type(bar);
+
+    same(int*, int32);
+    same(int, const int);
+    same(int[1], int);
+    same(double, f64);
+
+    is_void(int);
+    is_void(const void);
+    is_void(volatile void*);
+
+    is_integral(bool);
+    is_integral(uint8);
+    is_integral(uint64);
+    is_integral(float);
+    is_integral(double);
+
+    is_float(bool);
+    is_float(uint8);
+    is_float(uint64);
+    is_float(float);
+    is_float(double);
+
+    is_array(bool);
+    is_array(uint8);
+    is_array(int []);
+    is_array(float* []);
+
+    is_const(int);
+    is_const(const int);
+    is_const(const volatile int);
+
+    is_volatile(int);
+    is_volatile(const int);
+    is_volatile(const volatile int);
+
+    is_signed(bool);
+    is_signed(char);
+    is_signed(int8);
+    is_signed(uint8);
+    is_signed(int16);
+    is_signed(uint16);
+    is_signed(int32);
+    is_signed(uint32);
+    is_signed(int64);
+    is_signed(uint64);
+    is_signed(f32);
+    is_signed(f64);
+
+    is_unsigned(bool);
+    is_unsigned(char);
+    is_unsigned(int8);
+    is_unsigned(uint8);
+    is_unsigned(int16);
+    is_unsigned(uint16);
+    is_unsigned(int32);
+    is_unsigned(uint32);
+    is_unsigned(int64);
+    is_unsigned(uint64);
+    is_unsigned(f32);
+    is_unsigned(f64);
+
+    is_empty(bool);
+    is_empty(basic);
+    is_empty(void);
+    is_empty(empty);
+
+
+    is_pointer(int);
+    is_pointer(basic);
+    is_pointer(basic*);
+    is_pointer(empty**);
+
+    is_reference(int);
+    is_reference(basic&);
+    is_reference(basic*);
+    is_reference(empty*&&);
+
+    is_fundamental(int);
+    is_fundamental(greek);
+    is_fundamental(basic);
+    is_fundamental(basic*);
+    is_fundamental(empty**);
+
+    is_compound(int);
+    is_compound(int*);
+    is_compound(int[]);
+
+    is_compound(basic);
+    is_compound(greek);
+    is_compound(basic*);
+    is_compound(empty&);
+
+    is_abstract(abstract);
+    is_abstract(concrete);
+    is_abstract(basic);
+    is_abstract(greek);
+    is_abstract(basic*);
+    is_abstract(empty&);
+
+    is_destructible(int);
+    is_destructible(virt);
+    is_destructible(int*);
+    is_destructible(int[]);
+    is_destructible(int[2]);
+    is_destructible(basic);
+    is_destructible(greek);
+    is_destructible(basic*);
+
+    is_trivially_destructible(float);
+    is_trivially_destructible(virt);
+    is_trivially_destructible(int*);
+    is_trivially_destructible(int[]);
+    is_trivially_destructible(int[2]);
+    is_trivially_destructible(basic);
+    is_trivially_destructible(greek);
+    is_trivially_destructible(basic*);
+
+    is_nothrow_destructible(float);
+    is_nothrow_destructible(virt);
+    is_nothrow_destructible(exception);
+    is_nothrow_destructible(int*);
+    is_nothrow_destructible(int[]);
+    is_nothrow_destructible(int[2]);
+    is_nothrow_destructible(basic);
+    is_nothrow_destructible(greek);
+    is_nothrow_destructible(basic*);
+
+
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

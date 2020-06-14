@@ -1,0 +1,62 @@
+
+#define DUPLICATED_HANDLER 0
+extern "C" int printf(const char* format, ...);
+struct exception {
+    exception(const char* s) : msg(s)
+    {
+    }
+    const char* what()
+    {
+        return msg;
+    }
+    const char* msg;
+};
+
+void foo(int i)
+{
+    switch (i)
+    {
+    case 0:
+    throw 3;
+    case 1:
+    throw "throwing string";
+    case 2:
+        throw exception("throwing exception structure");
+    default:
+    break;
+    }
+    printf("throw nothing(%d)\n", i);
+}
+
+void simple(int i)
+{
+    try {
+        foo(i);
+        printf("try: foo()!\n");
+    }
+
+    catch (int& c)
+    {
+        printf("catch (int): %d\n", c);
+    }
+    #if DUPLICATED_HANDLER
+    catch (int& c)
+    {
+        printf("catch (int): %d\n", c);
+    }
+    #endif
+    catch (exception& e) {
+        printf("catch(struct): %s\n", e.what());
+    } catch (const char* s) {
+        printf("catch(const char*): %s\n", s);
+    }
+
+}
+
+int main()
+{
+    for (int i = 0; i < 3; ++i) {
+        simple(i);
+    }
+    return 0;
+}

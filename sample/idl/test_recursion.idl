@@ -1,0 +1,30 @@
+
+extern "C" int32 printf(const char* format, ...);
+
+extern "C" int32 f(int32 n)
+{
+    if( n == 0 || n == 1) return 1;
+    else {
+        return f(n-1) + f(n-2);
+    }
+}
+
+
+int32 simple()
+{
+    printf("[fibonacci]\n");
+
+    for (int32 i = 0; i < 10; ++i) {
+        int32 F = f(i);
+
+        printf("f(%d) = %d\n", i, F);
+    }
+
+
+    return 1;
+}
+
+int main()
+{
+    return simple();
+}

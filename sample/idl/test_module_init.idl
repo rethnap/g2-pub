@@ -1,0 +1,21 @@
+extern "C" int printf(const char* format, ...);
+
+struct cvar {
+    cvar()
+    {
+        printf("before main!\n");
+    }
+    ~cvar()
+    {
+        printf("after main!\n");
+    }
+    int k;
+} g_cvar;
+
+cvar g_cvar2;
+int main()
+{
+    // static cvar C;
+    printf("%s()\n", __FUNCTION__);
+    return 0;
+}

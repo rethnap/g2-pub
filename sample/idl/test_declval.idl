@@ -1,0 +1,15 @@
+extern "C" int32 printf(const char* format, ...);
+
+template <class _Tp> _Tp&& __declval0(int);
+template <class _Tp> _Tp   __declval0(long);
+
+template <class _Tp>
+decltype(__declval0<_Tp>(0))
+declval() noexcept;
+
+int main()
+{
+    declval<int>();
+
+    return 0;
+}

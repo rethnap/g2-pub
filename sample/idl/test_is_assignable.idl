@@ -1,0 +1,41 @@
+extern "C" int32 printf(const char* format, ...);
+
+struct bar {
+    int a;
+};
+
+struct bar2 {
+    short a;
+    short b;
+};
+struct bar3 {
+    int k;
+};
+
+#define assignable(x, y) \
+printf("is assignable(%s, %s): %s\n", #x, #y, __is_assignable(x,y) ? "true" : "false");
+int main()
+{
+    assignable(int, int);
+    assignable(int, int&);
+    assignable(bar, bar);
+    assignable(bar*, bar*);
+
+    assignable(bar[1], bar[1]);
+
+    assignable(bar&, bar);
+    assignable(bar, bar&);
+    assignable(bar, bar2);
+    assignable(bar, bar3);
+
+    assignable(int[2], int[2]);
+
+    assignable(int, short[2]);
+    assignable(int&, int);
+    assignable(int*, int);
+
+    assignable(int, double);
+    assignable(int&, double);
+
+    return 0;
+}

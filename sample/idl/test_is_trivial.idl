@@ -1,0 +1,66 @@
+extern "C" int printf(const char* format, ...);
+
+const char* b2s(bool v)
+{
+    return v ? "true" : "false";
+}
+#define is_trivial(x) \
+    printf("%s is trivial(%s)\n", #x, b2s(__is_trivial(x)));
+
+struct empty {
+};
+struct base {
+    ~base() {}
+    int a;
+};
+struct derived : base {
+};
+
+struct base2 {
+    int a;
+    float b;
+};
+
+struct mult {
+    int a[2];
+};
+
+struct virt {
+    virtual ~virt()
+    {
+
+    }
+    int a;
+};
+
+int main()
+{
+    is_trivial(bool);
+    is_trivial(char);
+    is_trivial(int8);
+    is_trivial(uint8);
+    is_trivial(int16);
+    is_trivial(uint16);
+    is_trivial(int32);
+    is_trivial(uint32);
+    is_trivial(int64);
+    is_trivial(uint64);
+    is_trivial(f32);
+    is_trivial(f64);
+    is_trivial(const int*);
+    is_trivial(const float&);
+    is_trivial(double&&);
+    is_trivial(const double[2]);
+
+    is_trivial(base);
+    is_trivial(mult);
+    is_trivial(base2);
+    is_trivial(derived);
+    is_trivial(empty);
+    is_trivial(virt);
+    is_trivial(virt*);
+    is_trivial(virt&);
+    is_trivial(virt[2]);
+
+    return 0;
+}

@@ -1,0 +1,35 @@
+extern "C" {
+    int printf(const char* format, ...);
+    int strcmp(const char *s1, const char *s2);
+}
+int simple(const char* v, int a)
+{
+
+    if (strcmp(v, "hello") == 0) {
+        printf ("input is: hello\n");
+        if (a > 0) {
+            printf("%d is positive\n", a);
+        }
+    } else if (strcmp(v, "world") == 0) {
+        printf("input is world\n");
+    } else if (strcmp(v, "denis") == 0) {
+        printf("input is denis\n");
+    } else {
+        printf("unknown input %s\n", v);
+    }
+    if (a < 0) {
+        printf("%d is negative\n", a);
+    }
+    return 0;
+}
+
+int main()
+{
+    simple("world",1);
+    simple("hello",2);
+    simple("abra",-1);
+    simple("denis",4);
+    simple("cadabra", -2);
+
+    return 0;
+}

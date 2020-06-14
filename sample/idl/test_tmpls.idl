@@ -1,0 +1,32 @@
+
+extern "C" int32 printf(const char* format, ...);
+
+template<typename _Value>
+    struct numeric_traits_integer
+    {
+      // Only integers for initialization of member constant.
+      static const _Value __min = _Value(12);
+      static const _Value __max = _Value(34);
+
+      // NB: these two also available in std::numeric_limits as compile
+      // time constants, but <limits> is big and we avoid including it.
+      static const bool is_signed = true;
+      static const int __digits = 3;
+    };
+
+  template<typename _Value>
+    const _Value numeric_traits_integer<_Value>::__min;
+
+  template<typename _Value>
+    const _Value numeric_traits_integer<_Value>::__max;
+
+  template<typename _Value>
+    const bool numeric_traits_integer<_Value>::is_signed;
+
+  template<typename _Value>
+    const int numeric_traits_integer<_Value>::__digits;
+
+int main()
+{
+  return 0;
+}

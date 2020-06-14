@@ -1,0 +1,47 @@
+extern "C" int printf(const char* format, ...);
+
+#define CASE 2
+
+int test_atomic()
+{
+    int i = 5;
+    int r;
+    #if CASE == 0
+    {
+    __atomic_load(&i, &r, 0);
+    printf("r = (%d, %d)\n", i, r);
+    }
+    #elif CASE == 1
+{
+    r = 3;
+    __atomic_store(&i, &r, 0);
+    printf("(%d, %d)\n", i, r);
+    }
+    #elif CASE == 2
+    i = 7;
+    r = 11;
+    int p;
+    {
+    __atomic_exchange(&i, &r, &p, 0);
+    printf("(%d, %d, p:= %d)\n", i, r, p);
+    }
+    #else
+    {
+    i = 13;
+    r = 17;
+    int c = 15;
+    __atomic_compare_exchange(&i, &c, &r, false, 0, 0);
+    printf("(%d, %d)\n", i, r);
+
+    }
+    #endif
+
+    return 0;
+}
+
+
+int main()
+{
+    test_atomic();
+    return 0;
+}

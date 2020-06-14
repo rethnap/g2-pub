@@ -1,0 +1,32 @@
+extern "C" int printf(const char* format, ...);
+struct __any
+{
+    // __any(...) {}
+    __any(...);
+};
+
+struct __nat
+{
+    __nat() = delete;
+    __nat(const __nat&) = delete;
+    __nat& operator=(const __nat&) = delete;
+    ~__nat() = delete;
+};
+
+template <class ..._Args>
+auto __invoke(__any, _Args&& ...__args) -> __nat;
+
+// template <class ..._Args>
+// __nat __invoke(__any, _Args&& ...__args);
+
+auto foo(int k) -> int
+{
+    return k * 10;
+}
+
+int main()
+{
+    int b = foo(3);
+    printf("foo(3):=%d\n", b);
+    return 0;
+}

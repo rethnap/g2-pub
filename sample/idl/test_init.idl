@@ -1,0 +1,42 @@
+
+extern "C" int32 printf(const char* format, ...);
+#define ARRAY 0
+
+class vector3
+{
+public:
+    // void dump()
+    // {
+    //     printf("(x, y, z) := (%f, %f, %f)\n", v[0], v[1], v[2]);
+    // }
+#if ARRAY
+    f32 v[3];
+#else
+    f32 x;
+    f32 y;
+    f32 z;
+#endif
+};
+
+int32 simple()
+{
+#if ARRAY
+    vector3 a = {{ 1.2f, 2.3f, 3.4f }};
+printf("a= (%f, %f, %f)\n", a.v[0], a.v[1], a.v[2]);
+
+#else
+    vector3 a;
+    a.x = 1.2f;
+    a.y = 2.3f;
+    a.z = 3.4f;
+printf("a= (%f, %f, %f)\n", a.x, a.y, a.z);
+
+#endif
+
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

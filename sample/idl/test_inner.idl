@@ -1,0 +1,7 @@
+extern "C" int32 printf(const char* format, ...);
+
+int32 inner()
+{
+    printf("%s:include-level: %d\n", "inner", __INCLUDE_LEVEL__);
+    return 0;
+}

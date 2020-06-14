@@ -1,0 +1,103 @@
+extern "C" int32 printf(const char* format, ...);
+
+int simple()
+{
+    #if 0
+{
+    uint8 a =22;
+    uint8 b = __builtin_clz(a);
+
+    printf("(a,b) := (%u, %u)\n", (uint32)a, (uint32)b);
+}
+
+{
+    int16 a = 1;
+    int16 b = __builtin_clz(a);
+
+    printf("(a,b) := (%u, %u)\n", (uint32)a, (uint32)b);
+}
+#endif
+{
+    uint32 a = 1U;
+    uint32 b = __builtin_clz(a);
+
+    printf("(a,b) := (%u, %u)\n", (uint32)a, (uint32)b);
+}
+
+{
+    uint64 a = 1UL;
+    uint64 b = __builtin_clzl(a);
+
+    printf("(a,b) := (%lu, %lu)\n",  a, b);
+}
+
+{
+    uint32 a = -1U;
+    uint32 b = __builtin_ctz(a);
+
+    printf("(a,b) := (%u, %u)\n", (uint32)a, (uint32)b);
+}
+
+{
+    uint64 a = -1UL;
+    uint64 b = __builtin_ctzl(a);
+
+    printf("(a,b) := (%lu, %lu)\n",  a, b);
+}
+
+{
+    uint64 a = 1UL;
+    uint64 b = __builtin_clzl(a);
+
+    printf("(a,b) := (%lu, %lu)\n",  a, b);
+}
+
+{
+    uint32 a = -1U;
+    uint32 b = __builtin_ffs(a);
+
+    printf("(a,b) := (%u, %u)\n", (uint32)a, (uint32)b);
+}
+
+{
+    uint64 a = -1UL;
+    uint64 b = __builtin_ffsll(a);
+
+    printf("(a,b) := (%lu, %lu)\n",  a, b);
+}
+
+{
+    uint32 a = -1U;
+    uint32 b = __builtin_popcount(a);
+
+    printf("(a,b) := (%u, %u)\n", (uint32)a, (uint32)b);
+}
+
+{
+    uint64 a = -1UL;
+    uint64 b = __builtin_popcountll(a);
+
+    printf("(a,b) := (%lu, %lu)\n",  a, b);
+}
+
+{
+    uint32 a = -1U;
+    uint32 b = __builtin_parity(a);
+
+    printf("(a,b) := (%u, %u)\n", (uint32)a, (uint32)b);
+}
+
+{
+    uint64 a = -5UL;
+    uint64 b = __builtin_parityll(a);
+
+    printf("(a,b) := (%lu, %lu)\n",  a, b);
+}
+
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

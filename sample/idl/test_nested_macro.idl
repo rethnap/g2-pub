@@ -1,0 +1,12 @@
+
+
+extern "C" int32 printf(const char* format, ...);
+
+
+#define check_cpp_attribute(x) printf("cpp-attribute(%s) = %d\n", # x, __has_cpp_attribute(x));
+
+int32 simple()
+{
+   check_cpp_attribute(clang::fallthrough);
+    return 0;
+}

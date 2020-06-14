@@ -1,0 +1,79 @@
+#include "common.idl"
+
+extern "C" int32 sizeof_array()
+{
+    int32 a[32];
+
+    int32 n0 = (int32)sizeof(a);
+    int32 n2 = (int32)sizeof(a[0]);
+
+    printf("(sizeof(a)  = %d\n", n0);
+    printf("(sizeof(a[0])  = %d\n", n2);
+
+    return 0;
+}
+
+extern "C" int32 sizeof_array2()
+{
+    int32 b[2][3][4];
+
+    int32 m0 = (int32)sizeof(b);
+    int32 m2 = (int32)sizeof(b[0]);
+    int32 m3 = (int32)sizeof(b[0][0]);
+   int32 m4 = (int32)sizeof(b[0][0][0]);
+   int32 k = m4;
+    printf("(sizeof(b)  = %d\n", m0);
+    printf("(sizeof(b[0])  = %d\n", m2);
+    printf("(sizeof(b[0][0])  = %d\n", m3);
+    printf("(sizeof(b[0][0][0])  = %d\n", m4);
+    printf("m5 <== m4 = %d\n", k);
+
+    return 0;
+}
+
+#define check(x) \
+    printf("sizeof(%s) = %lu\n", #x, sizeof(x));
+
+
+int32 simple()
+{
+        check(int8);
+        check(uint8);
+        check(int16);
+        check(uint16);
+        check(int32);
+        check(uint32);
+        check(int64);
+        check(uint64);
+        check(f32);
+        check(f64);
+        check(void*);
+//         printf("sizeof int128 = %lu\n", sizeof(int128));
+//         printf("sizeof uint128 = %lu\n", sizeof(uint128));
+//        printf("sizeof f16 = %lu\n", sizeof(f16));
+
+        sizeof_array();
+        sizeof_array2();
+    return 0;
+}
+template <class ..._Args>
+    int foo(_Args ...args)
+{
+    printf("sizeof...(_Args) :=%ld\n", sizeof...(args));
+    return sizeof...(args);
+}
+
+int test_pack()
+{
+    foo(1);
+    foo(1, 2, 3);
+    foo(1,2);
+    return 0;
+}
+
+int main()
+{
+    simple();
+    test_pack();
+    return 0;
+}

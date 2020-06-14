@@ -1,0 +1,17 @@
+
+extern "C" int32 printf(const char* format, ...);
+
+void bar()
+{
+    int test_logicalsource_line_length_eceeed_128_abcdefghilklmnopqrstuvwxyz0123456789_abcdefghilklmnopqrstuvwxyz0123456789_abcdefghilklmnopqrstuvwxyz0123456789_abcdefghilklmnopqrstuvwxyz0123456789 = 43;
+
+    printf("abcdefghilklmnopqrstuvwxyz0123456789_abcdefghilklmnopqrstuvwxyz0123456789_abcdefghilklmnopqrstuvwxyz0123456789_abcdefghilklmnopqrstuvwxyz0123456789!\n");
+}
+
+
+int main()
+{
+    bar();
+
+    return 0;
+}

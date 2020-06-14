@@ -1,0 +1,58 @@
+
+#include <stdio.h>
+#include <pthread.h>
+
+struct bar {
+    #if 0
+    thread_local
+    #endif
+    int a;
+};
+#if 0
+thread_local
+#endif
+ void foo0();
+
+#if 0
+thread_local
+#endif
+ void foo()
+{
+    thread_local int a;
+}
+
+thread_local int ti = 0;
+typedef void*(thread_proc_t)(void*);
+
+
+void* worker(void* )
+{
+    printf("i'm thread(%ld)\n", pthread_self());
+    for (int i = 0; i < 10; ++i) {
+        ti += i;
+        printf("[worker](ti = %d)\n", ti);
+    }
+    return nullptr;
+}
+
+int main()
+{
+    printf("hello world(%ld)!\n", pthread_self());
+
+    pthread_t h;
+    // int ret = pthread_create(&h, nullptr, (thread_proc_t*)worker, nullptr);
+    int ret = pthread_create(&h, nullptr, worker, nullptr);
+
+    if (ret) {
+        printf("failed to create thread!\n");
+    }
+    void* jret;
+    pthread_join(h, &jret);
+    for (int i = 0; i < 10; ++i) {
+        ti += i;
+        printf("[main](ti = %d)\n", ti);
+    }
+
+
+    return 0;
+}

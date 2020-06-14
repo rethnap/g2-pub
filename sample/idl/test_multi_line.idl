@@ -1,0 +1,31 @@
+
+
+extern "C" int32 printf(const char* format, ...);
+
+
+//#define check_cpp_attribute(x) printf("cpp-attribute(%s) = %d\n", # x, __has_cpp_attribute(x));
+
+//#define mline() printf("hello!\n"); printf("world!\n");
+#define mline() \
+    printf("hello!\n"); \
+    printf("world!\n");
+
+#define trick(x) \
+    if(x) {     \
+        printf("ok(%d)!\n", x);  \
+    } else {                    \
+        printf("bad(%d)!\n", x); \
+    }
+
+int32 simple()
+{
+    mline();
+    trick(true);
+    trick(false);
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

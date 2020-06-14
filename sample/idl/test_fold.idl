@@ -1,0 +1,78 @@
+
+extern "C" int32 printf(const char* format, ...);
+
+#define FAIL_CASE1 0
+#define FAIL_CASE2 0
+
+#if FAIL_CASE1
+int fail_case(int args) {
+    return (args + ...);
+}
+#endif
+
+#if FAIL_CASE1
+template<typename ...Args>
+int fail_case2(Args&&... args) {
+    return (args + ... + args);
+}
+#endif
+
+template<typename ...Args>
+int uleft(Args&&... args) {
+    return (args + ...); // OK
+}
+template<typename ...Args>
+int uright(Args&&... args) {
+    return (... + args); // OK
+}
+
+template<typename ...Args>
+int bleft(Args&&... args) {
+    return (args + ... + 1); // OK
+}
+
+template<typename ...Args>
+int bright(Args&&... args) {
+    return (2 + ... + args); // OK
+}
+
+int simple()
+{
+    #if FAIL_CASE2
+    fail_case2(1,2,3);
+    #endif
+    {
+        //expected
+        int ret = uleft(1, 2, 3);
+        printf("result: = %d\n", ret);
+    }
+   {
+        //expected
+        int ret2 = uright(1, 2, 3);
+        printf("result: = %d\n", ret2);
+    }
+
+    {
+        //expected
+        int ret3 = bleft(1, 2, 3);
+        printf("result: = %d\n", ret3);
+    }
+
+    {
+        //expected
+        int ret4 = bright(1, 2, 3);
+        printf("result: = %d\n", ret4);
+    }
+
+    // {
+            //expected @_Z3sumIJiifEEiDpOT_
+    //     int ret = sum(1,2,3.1f);
+    //     printf("result: = %d\n", ret);
+    // }
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

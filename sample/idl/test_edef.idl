@@ -1,0 +1,39 @@
+extern "C" int32 printf(const char* format, ...);
+
+class basic {
+public:
+
+    basic()
+    {
+        b = 2;
+        ++a;
+        printf("i'm %s  (%d, %d)!\n", __FUNCTION__, a, b);
+    }
+    ~basic()
+    {
+    printf("i'm dtor of basic!\n");
+    }
+
+    void show()
+    {
+        this->a = 7;
+        printf("i'm %s!!\n\t(a,b) = (%d, %d)\n", __FUNCTION__, a, b);
+    }
+
+    int a = 3;
+    int b = 4;
+};
+
+int32 simple()
+{
+    basic B;
+
+
+    B.show();
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

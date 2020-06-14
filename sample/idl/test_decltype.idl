@@ -1,0 +1,18 @@
+extern "C" int32 printf(const char* format, ...);
+
+int simple()
+{
+    int x = 3;
+    double y = 3.14;
+
+    decltype(y) z = y + (double)x;
+    printf("z is = %g\n", z);
+
+    return 0;
+}
+
+int main()
+{
+    simple();
+    return 0;
+}

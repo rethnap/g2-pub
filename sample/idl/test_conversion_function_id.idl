@@ -1,0 +1,53 @@
+
+extern "C" int32 printf(const char* format, ...);
+
+class basic {
+public:
+    // operator double(char c);
+    operator int()
+    {
+        return a;
+    }
+    typedef float value_type;
+    operator value_type()
+    {
+        return b;
+    }
+   void show()
+   {
+        printf("(a,b) = (%d, %f)\n", a, b);
+   }
+
+    int32 a = 1;
+    f32 b = 2.0f;
+};
+
+struct X {
+    // operator float() ->float;
+    // operator int(); // OK
+    // operator auto() -> short;  // error: trailing return type not part of syntax
+    operator auto() const { return 10; } // OK: deduced return type
+};
+
+int32 test_conversion_function()
+{
+    basic B;
+
+    auto a = (int)B;
+    auto b = (f32)B;
+    int a2 = B.operator int();
+    f32 b2 = B.operator f32();
+    X x;
+    int v = (int)x;
+
+    printf("(a,b) := (%d/%d, %f/%f, x(%d))\n", a, a2, b, b2, v);
+
+    B.show();
+
+    return 0;
+}
+
+int main()
+{
+    return test_conversion_function();
+}

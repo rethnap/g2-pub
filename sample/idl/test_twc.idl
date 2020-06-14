@@ -1,0 +1,19 @@
+#if !__idlidl__
+#include <compare>
+#endif
+
+#define check(x) { \
+    auto r = x; \
+    int8* p = (int8*)&r; \
+    printf("%s: %d\n", #x, *p); \
+}
+
+extern "C" int32 printf(const char* format, ...);
+
+int main()
+{
+    check(3 <=>2);
+    check(2 <=>3);
+    check(2<=>2);
+    return 0;
+}

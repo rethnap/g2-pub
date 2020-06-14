@@ -1,0 +1,65 @@
+extern "C" int printf(const char* format, ...);
+
+const char* b2s(bool v)
+{
+    return v ? "true" : "false";
+}
+#define is_literal_type(x) \
+    printf("%s is literal_type(%s)\n", #x, b2s(__is_literal_type(x)));
+
+struct empty {
+};
+struct base {
+    ~base() {}
+    int a;
+};
+struct derived : base {
+};
+
+struct base2 {
+    int a;
+    float b;
+};
+
+struct mult {
+    int a[2];
+};
+
+struct virt {
+    virtual ~virt()
+    {
+
+    }
+    int a;
+};
+
+int main()
+{
+    is_literal_type(bool);
+    is_literal_type(char);
+    is_literal_type(int8);
+    is_literal_type(uint8);
+    is_literal_type(int16);
+    is_literal_type(uint16);
+    is_literal_type(int32);
+    is_literal_type(uint32);
+    is_literal_type(int64);
+    is_literal_type(uint64);
+    is_literal_type(f32);
+    is_literal_type(f64);
+    is_literal_type(const int*);
+    is_literal_type(const float&);
+    is_literal_type(const double[2]);
+
+    is_literal_type(base);
+    is_literal_type(mult);
+    is_literal_type(base2);
+    is_literal_type(derived);
+    is_literal_type(empty);
+    is_literal_type(virt);
+    is_literal_type(virt*);
+    is_literal_type(virt&);
+    is_literal_type(virt[2]);
+
+    return 0;
+}

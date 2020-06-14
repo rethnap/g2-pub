@@ -1,0 +1,123 @@
+extern "C" int printf(const char* format, ...);
+#define UNUSED(x) if(x) {}
+
+#if __idlidl__
+extern "C++"
+{
+void* operator new(uint64 count) noexcept;
+void* operator new [] (uint64 count) noexcept;
+
+void operator delete(void* ptr);
+void operator delete [] (void* ptr);
+}
+#else
+#include <new>
+#endif
+
+#define ALL 1
+
+struct bar {
+    bar()
+    {
+        static int N = 0;
+        ++N;
+        a += N;
+        b -= N;
+        printf("i'm %s: %d\n", __FUNCTION__, N);
+    }
+    ~bar()
+    {
+        printf("i'm %s:%d\n", __FUNCTION__, a);
+    }
+    int a = 1;
+    int b = 2;
+};
+
+#if ALL
+int foo(int a[3])
+{
+    int sum = 0;
+    sum = a[0] + a[1] + a[2];
+    return sum;
+}
+
+int32 simple()
+{
+    printf("%s\n", __FUNCTION__);
+
+    int b[3] = { 1, 2, 3 };
+    int n = foo(b);
+    printf("sum = %d\n", n);
+
+    // int32* a = new int32[8];
+    auto a = new int32[8];
+
+    int32 sum = 0;
+    for (int32 i = 0; i < 8; ++i) {
+        a[i] = 7 - i;
+        printf("a[%d] = %d\n", i, a[i]);
+        sum += a[i];
+    }
+
+    printf("sum is %d\n", sum);
+
+    for (int32 j = 0; j < 8; ++j) {
+        printf("a[%d] = %d\n", j, a[j]);
+    }
+
+    delete [] a;
+    return 0;
+}
+
+int aos_heap()
+{
+    printf("%s\n", __FUNCTION__);
+    auto p = new bar[3];
+    for (int i = 0;i < 3; ++i) {
+        printf("%d: (%d, %d)\n", i, p[i].a, p[i].b);
+    }
+    delete [] p;
+    return 0;
+}
+int aos_stack()
+{
+    printf("%s\n", __FUNCTION__);
+
+    bar p[3];
+    for (int i = 0;i < 3; ++i) {
+        printf("%d: (%d, %d)\n", i, p[i].a, p[i].b);
+    }
+    return 0;
+}
+#endif
+
+int placement_new()
+{
+    printf("%s\n", __FUNCTION__);
+
+    char buffer[256];
+    auto p = new (buffer) int[4];
+    for (int i = 0; i < 4; ++i) {
+        p[i] = 4 - i;
+    }
+    int* p2 = (int*)buffer;
+    for (int i = 0; i < 4; ++i) {
+        printf("p[%d]: %d/%d\n", i, p[i], p2[i]);
+
+    }
+    auto a = new (buffer) bar[3];
+    // delete [] p;
+    UNUSED(a)
+    return 0;
+}
+
+int main()
+{
+#if ALL
+    simple();
+    aos_heap();
+    aos_stack();
+#endif
+    placement_new();
+    return 0;
+}

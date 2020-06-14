@@ -1,0 +1,7 @@
+extern "C" int printf(const char* format, ...);
+
+void explode(void) __attribute__((deprecated("extremely unsafe, use 'combust' instead!!!")));
+int simple()
+{
+    return 0;
+}

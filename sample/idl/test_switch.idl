@@ -1,0 +1,27 @@
+#define ENABLE_SWITCH 1
+#if ENABLE_SWITCH
+int test_switch()
+{
+    // float a = 3.14f;
+    int a = 3;
+    switch (a) {
+    case 0:
+        return 0;
+    case 2:
+        return 2;
+        // break;
+    case 3:
+        return 3;
+    default:
+        return -1;
+    }
+}
+#endif
+
+int main()
+{
+#if ENABLE_SWITCH
+    test_switch();
+#endif
+    return 0;
+}

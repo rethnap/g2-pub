@@ -1,0 +1,58 @@
+extern "C" int printf(const char* format, ...);
+extern "C++"
+{
+void* operator new(uint64 count);
+void operator delete(void* ptr);
+
+}
+
+struct fruit {
+    int a;
+    virtual fruit* clone()
+    {
+        printf("should not be called!\n");
+        return nullptr;
+    }
+};
+
+struct apple : public fruit {
+    apple* clone() final;
+};
+
+apple* apple::clone()
+{
+    auto p = new apple;
+    // p->a ='a';
+    printf("apple\n");
+    return p;
+}
+#if FAIL
+struct nut {
+    int b;
+};
+struct banana : public fruit {
+    nut* clone() final;
+};
+
+nut* banana::clone()
+{
+    auto p = new nut;
+    p->b ='n';
+    printf("banana\n");
+    return p;
+}
+#endif
+int main()
+{
+    apple a;
+    fruit* fa = (fruit*)&a;
+    // apple* p= a.clone();
+    // fruit* fb = (fruit*)&b;
+
+    // auto f = fa->clone();
+    apple* f2 = a.clone();
+
+    // delete f;
+    // delete f2;
+    return 0;
+}

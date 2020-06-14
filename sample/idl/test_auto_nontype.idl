@@ -1,0 +1,18 @@
+extern "C" int printf(const char* format, ...);
+
+template <auto value> constexpr auto constant2 = value;
+constexpr auto const ICONST = constant2<100>;
+// constexpr auto const ICONST2 = constant2<314>;
+
+//  constexpr auto const FCONST = constant2<3.14>;
+
+
+int main()
+{
+    printf("integer-constant:%d\n", ICONST);
+    // printf("integer-constant:%d\n", ICONST2);
+    // printf("float-constant:%g\n", FCONST);
+
+    return 0;
+}
+

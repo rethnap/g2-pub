@@ -1,0 +1,45 @@
+extern "C" int32 printf(const char* format, ...);
+
+#define check(x, v)                 \
+{                                   \
+    printf("%s cast\n", #x);\
+\
+    x a = v;\
+\
+    int8  a2 = (int8)a;\
+    uint8 a3 = (uint8)a;\
+    int16 a4 = (int8)a;\
+    uint16 a5 = (uint16)a;\
+    int32 a6 = (int32)a;\
+    uint32 a7 = (uint32)a;\
+    int64 a8 = (int64)a;\
+    uint64 a9 = (uint64)a;\
+\
+    f32 a10 = (f32)a;\
+    f64 a11 = (f64)a;\
+    printf("result:%d, %d, %d, %d, %d, %d, %u, %ld, %lu, %g, %g\n",  \
+    (int)a, (int)a2, (int)a3, (int)a4, (int)a5, (int)a6, a7, a8, a9, a10, a11); \
+}
+
+
+int32 simple()
+{
+    check(int8, 3);
+    check(uint8, 3);
+    check(int16, 3);
+    check(uint16, 3);
+    check(int32, 3);
+    check(uint32, 3);
+    check(int64, 3);
+    check(uint64, 3);
+    check(f32, 3.14f);
+    check(f64, 3.141592);
+
+    return 0;
+
+}
+
+int main()
+{
+    return simple();
+}

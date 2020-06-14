@@ -1,0 +1,56 @@
+
+
+extern "C" int printf(const char* format, ...);
+#if !__idlidl__
+#include <type_traits>
+#endif
+
+///usr/local/bin/../include/c++/v1/__config:170:9
+#define __has_keyword(__x) !(__is_identifier(__x))
+#if __has_keyword(__remove_const)
+#define remove_const(x) __remove_const(x)
+#else
+#define remove_const(x) std::remove_const<x>::type
+#endif
+
+#if __has_keyword(__remove_volatile)
+#define remove_volatile(x) __remove_volatile(x)
+#else
+#define remove_volatile(x) std::remove_volatile<x>::type
+#endif
+
+#if __has_keyword(__remove_cv)
+#define remove_cv(x) __remove_cv(x)
+#else
+#define remove_cv(x) std::remove_cv<x>::type
+#endif
+
+#if __has_keyword(__remove_reference)
+#define remove_reference(x) __remove_reference(x)
+#else
+#define remove_reference(x) std::remove_reference<x>::type
+#endif
+
+#define check_const(x, y) \
+    printf("remove_const(%s) is %s: %s\n", #x, #y, __is_same(remove_const(x), y) ? "true" : "false");
+
+#define check_volatile(x, y) \
+    printf("remove_volatile(%s) is %s: %s\n", #x, #y, __is_same(remove_volatile(x), y) ? "true" : "false");
+
+#define check_cv(x, y) \
+    printf("remove_cv(%s) is %s: %s\n", #x, #y, __is_same(remove_cv(x), y) ? "true" : "false");
+
+#define check_reference(x, y) \
+    printf("remove_reference(%s) is %s: %s\n", #x, #y, __is_same(remove_reference(x), y) ? "true" : "false");
+
+
+int main()
+{
+    check_const(const int, int);
+    check_volatile(volatile int, int);
+    check_const(const int, int);
+    check_cv(const volatile int, int);
+    check_reference(int&, int);
+
+    return 0;
+}

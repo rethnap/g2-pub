@@ -1,0 +1,35 @@
+extern "C" int32 printf(const char* format, ...);
+
+#define check(x, n, v) \
+{   \
+    printf("__builtin_bitreverse%d\n", n); \
+    x a = v; \
+    x b = __builtin_bitreverse ## n (a); \
+    printf("(a,b) := (%d, %d)\n", a, b); \
+}
+
+
+int simple()
+{
+    check(int8, 8, 1);
+#if 1
+    check(int16, 16, 1);
+    check(int32, 32, 1);
+
+    {
+        printf("__builtin_bitreverse%d\n", 64);
+        uint64 a = 1ULL;
+        uint64 b = __builtin_bitreverse64(a);
+
+        printf("(a,b) := (%lu, %lu)\n", a, b);
+    }
+#endif
+
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}
+

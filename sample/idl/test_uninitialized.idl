@@ -1,0 +1,24 @@
+
+extern "C" int32 printf(const char* format, ...);
+
+int test_uninitialized()
+{
+    int a;
+    a += 2;
+    return 0;
+}
+
+// int test_array()
+// {
+//     int v[2];
+//     v[0] += 1;
+//     printf("%d\n", v[0]);
+//     return 0;
+// }
+
+int main()
+{
+    test_uninitialized();
+    // test_array();
+    return 0;
+}

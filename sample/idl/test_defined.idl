@@ -1,0 +1,23 @@
+
+extern "C" int32 printf(const char* format, ...);
+
+int simple()
+{
+#if defined(__has_feature)
+    printf("'__has_feature' is defined\n");
+#endif
+
+#if defined(__has_include)
+    printf("'__has_include' is defined\n");
+#endif
+
+#if !defined(hello)
+    printf("'hello' is not defined!\n");
+#endif
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

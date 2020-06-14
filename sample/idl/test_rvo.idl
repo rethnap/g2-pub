@@ -1,0 +1,50 @@
+
+extern "C" int32 printf(const char* format, ...);
+
+class vector3
+{
+public:
+    vector3 operator + (const vector3& r)
+    {
+        vector3 ret;
+        ret.x = x + r.x;
+        ret.y = y + r.y;
+        ret.z = z + r.z;
+        return ret;
+    }
+    void dump(const char* id)
+    {
+        printf("%s= (%f, %f, %f)\n", id, (f64)x, (f64)y, (f64)z);
+    }
+    f32 x;
+    f32 y;
+    f32 z;
+};
+
+int32 simple()
+{
+    vector3 a;
+    a.x = 1.2f;
+    a.y = 2.3f;
+    a.z = 3.4f;
+
+    a.dump("a");
+
+    vector3 b;
+    b.x = 4.5f;
+    b.y = 5.6f;
+    b.z = 6.7f;
+
+    b.dump("b");
+
+    vector3 c = a + b;
+
+    c.dump("c");
+
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

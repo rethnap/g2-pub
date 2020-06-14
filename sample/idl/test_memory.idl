@@ -1,0 +1,47 @@
+#include "common.idl"
+
+class hello {
+public:
+    hello()
+    {
+        ++a;
+        printf("i'm your mother(%d, %d)!\n", a, b);
+    }
+    ~hello()
+    {
+        printf("i'm your father(%d, %d)!\n", a, b);
+    }
+
+    int32 a = 4;
+    int32 b = 5;
+
+    void show()
+    {
+        printf("hello(a,b) := (%d, %d)!\n", a, b);
+    }
+};
+
+int32 simple()
+{
+    //@_ZN5helloC2Ev
+    hello* h = new hello;
+    h->show();
+    h->a = 31;
+    h->b = 43;
+    h->show();
+    h->a += 2;
+    h->show();
+    int32 c = 5;
+    c -= 7;
+    printf("h->a = %d, h->b = %d, c = %d\n", h->a,  h->b, c);
+    // cowardly refuse to print dynamic address
+    // printf("address of a is : %p\n", h);
+    delete h;
+
+    return 3;
+}
+
+int main()
+{
+    return simple();
+}

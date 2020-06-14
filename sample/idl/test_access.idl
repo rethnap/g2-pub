@@ -1,0 +1,78 @@
+extern "C" int32 printf(const char* format, ...);
+
+class basic {
+public:
+    basic()
+    {
+        // ++a;
+        printf("i'm ctor of basic(%d, %d)!\n", a, b);
+    }
+    ~basic()
+    {
+    printf("i'm dtor of basic!\n");
+    }
+
+    void show()
+    {
+        this->a = 7;
+        printf("i'm show!!\n\t(a,b) = (%d, %d)\n",a, b);
+    }
+// private:
+// protected:
+// public:
+
+private:
+// protected:
+public:
+    int32 a = 14;
+    int32 b = 15;
+    // private:
+    int blah = 16;
+
+};
+
+class rabbit : public basic {
+public:
+    rabbit()
+    {
+        printf("Who Framed Roger Rabbit?\n");
+    }
+    ~rabbit()
+    {
+        printf("you did!\n");
+    }
+    void foo()
+    {
+        printf("foo: (blah) = (%d)\n", blah);
+    }
+};
+
+int32 simple()
+{
+    basic B;
+
+    B.a = 1;
+    B.b = 2;
+    // B.show();
+    // B.a += 2;
+    // B.a += 3;
+    // B.b -= 2;
+    B.show();
+    {
+        printf("i'm inner --begin!\n");
+        rabbit R;
+        printf("i'm inner --end!\n");
+        R.foo();
+    }
+
+   B.show();
+
+    //printf("(B.a, B.b) = (%d, %d)\n", B.a, B.b);
+
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

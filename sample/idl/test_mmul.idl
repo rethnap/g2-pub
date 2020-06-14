@@ -1,0 +1,37 @@
+
+extern "C" int32 printf(const char* format, ...);
+
+#if __idlidl__
+void* operator new(uint64 count);
+void* operator new [] (uint64 count);
+
+void operator delete(void* ptr);
+void operator delete [] (void* ptr);
+#endif
+#define UNUSED(x) if(x) {}
+
+void mprec_umul()
+{
+    uint32 x = 123456;
+    uint32 y = 789012;
+    uint32* r = new uint32;
+
+    bool z =__builtin_umul_overflow(x, y, r);
+    UNUSED(z)
+    printf("mul: (%u, %u, %u)\n", x, y, r[0]);
+
+    delete r;
+}
+
+int simple()
+{
+   mprec_umul();
+
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}
+

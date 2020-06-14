@@ -1,0 +1,33 @@
+extern "C" int32 printf(const char* format, ...);
+
+static_assert(__has_builtin(__type_pack_element), "");
+
+// using SizeT = decltype(sizeof(int));
+
+// template <SizeT i, typename ...T>
+// using TypePackElement = __type_pack_element<i, T...>;
+
+template <int i>
+struct X {
+    int v = i;
+};
+
+static_assert(__is_same(__type_pack_element<0, X<0>, X<1>>, X<0>), "");
+static_assert(__is_same(__type_pack_element<1, X<0>, X<1>>, X<1>), "");
+// static_assert(__is_same(__type_pack_element<1, X0, X<1>, int), "");
+
+int main()
+{
+    X<0> a;
+    X<1> b;
+    X<2> c;
+    a.v = 1;
+    b.v = 2;
+    c.v = 3;
+
+    printf("%d, %d, %d\n", a.v, b.v, c.v);
+
+    bool ok = __is_same(__type_pack_element<1, X<0>, X<1>>, int);
+    printf("%s\n", ok ? "true" : "false");
+    return 0;
+}

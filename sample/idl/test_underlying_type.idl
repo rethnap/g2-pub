@@ -1,0 +1,23 @@
+extern "C" int printf(const char* format, ...);
+
+enum fruit {
+};
+enum class meat : uint32 {
+};
+const char* b2s(bool v)
+{
+    return v ? "true" : "false";
+}
+#define check_underlying_type(x, y) \
+printf("underlying type of %s is %s: %s\n", #x, #y, b2s(__is_same(__underlying_type(x), y)));
+int main()
+{
+
+    check_underlying_type(const fruit, int);
+    check_underlying_type(fruit, uint32);
+    check_underlying_type(fruit, float);
+    check_underlying_type(meat, uint32);
+    check_underlying_type(fruit, float);
+
+    return 0;
+}

@@ -1,0 +1,83 @@
+extern "C" int32 printf(const char* format, ...);
+
+namespace outer
+{
+    int foo(int v)
+    {
+        printf("i'm : outer::%s:%d\n", __FUNCTION__, v);
+        return 0;
+    }
+    int* foo2(int v)
+    {
+        printf("i'm : outer::%s\n", __FUNCTION__);
+        return nullptr;
+    }
+inline namespace _v1 {
+namespace inner {
+    int g_a = 3;
+}
+}
+}
+
+
+namespace other
+{
+    int32 foo(int v)
+    {
+        {
+        printf("i'm : other::%s:%d\n", __FUNCTION__, v);
+
+        return 0;
+    }
+    }
+}
+
+#if 0 // raise USING_DIRECTIVE_WITHIN_CLASS_SCOPE
+class basic {
+public:
+using namespace other;
+};
+
+#endif
+
+
+int test_using()
+{
+    using namespace outer;
+
+    outer::foo(1);
+    other::foo(2);
+    foo(3);
+    outer::foo2(0);
+    return 0;
+}
+
+int test_inline()
+{
+    printf("outer::inner::g_a(%d)\n", outer::inner::g_a);
+    return 0;
+}
+
+namespace outer2::inner2 {
+int foo()
+{
+    printf("outer2::inner2::foo()\n");
+    return 0;
+}
+
+}
+
+int test_nested()
+{
+    outer2::inner2::foo();
+    return 0;
+}
+
+int main()
+{
+    // foo(4);
+    test_using();
+    test_inline();
+    test_nested();
+    return 0;
+}

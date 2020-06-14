@@ -1,0 +1,80 @@
+
+extern "C" int32 printf(const char* format, ...);
+#define UNUSED(x) if(x) {}
+
+int foo()
+{
+    printf("i'm %s\n", __FUNCTION__);
+    return 0;
+}
+
+struct bar {
+    int f(int v)
+    {
+        printf("%s: %d + %d = %d\n", __FUNCTION__, a, v, a + v);
+        return a;
+    }
+    int a = 3;
+};
+
+typedef int (*fcb)(const char* format, ...);
+#define FAIL_CASE 0
+
+int test_format()
+{
+    fcb cb = printf;
+    int a = 3;
+    float b = 3.1f;
+#if FAIL_CASE
+    printf("char* = %s\n", a);
+    printf("float %f\n", a);
+    printf("int %d\n", b);
+#endif
+
+    int8 a3 = 1;
+    UNUSED(a3)
+    int16 a2 = 2;
+    void* p = (void*)&a;
+    UNUSED(p)
+    printf("int32 %d\n",  a);
+    printf("int16 %d\n",  a2);
+    printf("float %f\n", b);
+
+    cb("int32 %d\n",  a);
+    cb("int16 %d\n",  a2);
+    // cb("pointer %p\n", p);
+    cb("float %3.4f\n", b);
+
+    return 0;
+}
+
+typedef int (*vcb) ();
+
+int32 simple()
+{
+    vcb f = foo;
+    f();
+    return 0;
+}
+
+typedef int (bar::*scb)(int);
+
+int test_pm()
+{
+    bar B;
+    bar* p = &B;
+    UNUSED(p)
+    scb CB = &bar::f;
+    (B.*CB)(1);
+    (p->*CB)(2);
+
+    return 0;
+}
+
+int main()
+{
+    simple();
+    test_format();
+    test_pm();
+    return 0;
+}

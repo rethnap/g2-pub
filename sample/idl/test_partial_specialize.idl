@@ -1,0 +1,17 @@
+template <class _Tp, bool = false>
+struct __make_signed {};
+
+template <class _Tp>
+struct __make_signed<_Tp, true>
+{
+    typedef _Tp type;
+};
+
+template <> struct __make_signed<bool,               true> {};
+template <> struct __make_signed<  signed short,     true> {typedef short     type;};
+
+int main()
+{
+    __make_signed<int> k;
+    return 0;
+}

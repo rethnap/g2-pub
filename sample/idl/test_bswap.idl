@@ -1,0 +1,32 @@
+extern "C" int32 printf(const char* format, ...);
+
+int simple()
+{
+    {
+        int16 a = 1;
+        int16 b = __builtin_bswap16(a);
+
+        printf("(a,b) := (%d, %d)\n", a, b);
+    }
+
+    {
+        int32 a = 1;
+        int32 b = __builtin_bswap32(a);
+
+        printf("(a,b) := (%d, %d)\n", a, b);
+    }
+
+    {
+        uint64 a = 1ULL;
+        uint64 b = __builtin_bswap64(a);
+
+        printf("(a,b) := (%lu, %lu)\n", a, b);
+    }
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}
+

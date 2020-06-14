@@ -1,0 +1,70 @@
+extern "C" int32 printf(const char* format, ...);
+
+class basic {
+public:
+    basic()
+    {
+        printf("%s\n", __FUNCTION__);
+    }
+    basic& get()
+    {
+        return *this;
+    }
+    int a = 0;
+};
+int& foo(int& a)
+{
+    return a;
+}
+
+int& foo2()
+{
+    static int a = 2;
+    return a;
+}
+int g_a = 5;
+int& foo3()
+{
+    return g_a;
+}
+
+#define FAIL 0
+#if FAIL
+int& foo4(int a)
+{
+    return a;
+}
+
+#endif
+void assign(int& r, int v)
+{
+    r = v;
+}
+
+int simple()
+{
+    basic B;
+    basic& r = B;
+
+    for (int32 i = 0; i < 8; ++i) {
+        r.a = -i;
+        printf("(i, basic.a) := (%d, %d)\n", i, B.a);
+    }
+
+    int b;
+    assign(b, 0);
+    int& a = b;
+    a += 1;
+    printf("b: %d\n", b);
+    for (int32 i = 0; i < 8; ++i) {
+        a = i;
+        printf("(i, b) := (%d, %d)\n", i, b);
+    }
+
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

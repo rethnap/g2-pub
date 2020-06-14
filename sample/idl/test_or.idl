@@ -1,0 +1,17 @@
+extern "C" int printf(const char* format, ...);
+
+bool bor(int x, int y)
+{
+    return x || y;
+}
+
+#define check(a, b) printf("bor(%d, %d) = %d)\n", a, b, bor(a, b));
+
+int main()
+{
+    check (1, 1);
+    check (1, 0);
+    check (0, 1);
+    check (0, 0);
+    return 0;
+}

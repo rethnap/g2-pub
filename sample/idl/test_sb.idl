@@ -1,0 +1,24 @@
+
+extern "C" int32 printf(const char* format, ...);
+
+struct S {
+    int a;
+    struct S* next;
+};
+
+int main()
+{
+    S a;
+    S b;
+    S* c = nullptr;
+
+    a.a = 1;
+    b.a = 2;
+    a.next = &b;
+    b.next = nullptr;
+
+    printf("last: (%p, %p\n", a.next, b.next);
+    printf("last: %d\n", a.next->a);
+    return 0;
+}
+

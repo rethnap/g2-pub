@@ -1,0 +1,31 @@
+extern "C" int32 printf(const char* format, ...);
+extern "C" void abort();
+
+#define assert(x)   \
+ if (!(x)) { \
+    printf("assert fail: %s:%d\n", __FILE__, __LINE__); \
+     abort();           \
+     }
+
+int32 simple()
+{
+   //assert(true);
+   //assert(false);
+     assert(1);
+    //assert(0);
+
+    int32 b = 4;
+
+    printf("should be seen!\n");
+    assert(b > 2);
+
+    printf("ok! immediately fail!\n");
+    assert(b < 3);
+
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

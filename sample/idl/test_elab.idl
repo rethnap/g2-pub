@@ -1,0 +1,18 @@
+
+extern "C" int32 printf(const char* format, ...);
+
+
+template <bool> struct base;
+template <>
+struct base<true> {
+    template <class _Tp, class _Up>
+        using _SelectImpl = _Tp;
+    template <template <class...> class _FirstFn, template <class...> class, class ..._Args>
+        using _SelectApplyImpl = _FirstFn<_Args...>;
+
+};
+
+int main()
+{
+    return 0;
+}

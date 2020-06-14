@@ -1,0 +1,82 @@
+//#include "common.idl"
+
+
+extern "C" int32 printf(const char* format, ...);
+#define dimof(x) (sizeof(x) / sizeof(x[0]))
+#define version 3141692
+#define olike (version % 123)
+#define UNUSED(x) if(x) {}
+
+int test_olikely()
+{
+    int a = olike;
+    printf("olike %d\n", a);
+    return 0;
+}
+
+int test_flikely()
+{
+    int32 a[32];
+
+    int32 N = dimof(a);
+   int64 n0 = sizeof(a);
+    int64 n2 = sizeof(a[0]);
+    int64 n3 = sizeof(a);
+//
+    printf("dimof a = %d\n", N);
+    printf("(sizeof(a)  = %ld\n", n0);
+    printf("(sizeof(a[0])  = %ld\n", n2);
+    printf("(sizeof(a)  = %ld\n", n3);
+
+//
+    return 0;
+}
+#define stringnize(x) #x
+
+int test_stringnize()
+{
+    const char* a0 =  stringnize(a0);
+    const char* s = "a0";
+    UNUSED(s);
+    printf("name of a0 is %s\n", a0);
+    printf("original name of a0 is %s\n", "a0");
+
+    const char* wsp = stringnize(  compact single  double   triple    white  +    space -daa ---ccc);
+    printf("wsp compaction: %s\n", wsp);
+
+    return 0;
+}
+
+#define cat(x, y) x ## y
+
+int32 test_cat()
+{
+    int32 cat(n, 0) = 3;
+    int32 cat(n, 2) = 4;
+    printf("(n0, n2) = (%d, %d)\n", n0, n2);
+
+    return 0;
+}
+
+#define print(...) printf(__VA_ARGS__);
+#define print2(x, ...) printf(x, __VA_ARGS__);
+
+int test_vmac()
+{
+    print("hello %s:%d[%g]\n", "world", 3, 3.141592);
+    print2("hello %s:%d[%g]\n", "world", 3, 3.141592);
+
+    // fail("hello %s:%d[%g]\n", "world", 3, 3.141592);
+
+    return 0;
+}
+
+int main()
+{
+    test_olikely();
+    test_flikely();
+    test_stringnize();
+    test_cat();
+    test_vmac();
+    return 0;
+}

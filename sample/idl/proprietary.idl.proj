@@ -1,0 +1,8 @@
+project(proprietary)
+
+set(prop_ROOT, "${proprietary_ROOT_DIR}")
+support-lang(c++)
+//lang-folder("${prop_ROOT_DIR}/../../example/idl/cs/test/hello")
+add-library(proprietary
+    proprietary.idl
+)

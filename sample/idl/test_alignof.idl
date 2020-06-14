@@ -1,0 +1,30 @@
+// from https://en.cppreference.com/w/cpp/language/alignof
+
+extern "C" int32 printf(const char* format, ...);
+
+struct Foo {
+    int   i;
+    float f;
+    char  c;
+};
+
+struct Empty {};
+
+struct alignas(64) Empty64 {};
+
+int main()
+{
+    printf("Alignment of"  "\n");
+    printf("- char             : %lu\n" , alignof(char)    );
+    printf("- pointer          : %lu\n" , alignof(int*)    );
+    printf("- class Foo        : %lu\n" , alignof(Foo)     );
+    printf("- empty class      : %lu\n" , alignof(Empty)   );
+    printf("- alignas(64) Empty: %lu\n" , alignof(Empty64) );
+    printf("- char             : %lu\n" , __alignof(char)    );
+    printf("- pointer          : %lu\n" , __alignof(int*)    );
+    printf("- class Foo        : %lu\n" , __alignof(Foo)     );
+    printf("- empty class      : %lu\n" , __alignof(Empty)   );
+    printf("- alignas(64) Empty: %lu\n" , __alignof(Empty64) );
+
+    return 0;
+}

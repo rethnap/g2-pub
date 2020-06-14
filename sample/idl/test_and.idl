@@ -1,0 +1,17 @@
+extern "C" int printf(const char* format, ...);
+
+bool band(int x, int y)
+{
+    return x && y;
+}
+
+#define check(a, b) printf("band(%d, %d) = %d)\n", a, b, (bool)band(a, b));
+
+int main()
+{
+    check (1, 1);
+    check (1, 0);
+    check (0, 1);
+    check (0, 0);
+    return 0;
+}

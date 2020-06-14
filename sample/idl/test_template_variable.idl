@@ -1,0 +1,28 @@
+// copied from https://en.cppreference.com/w/cpp/language/variable_template
+extern "C" int printf(const char* format, ...);
+
+// _Z2piIfE
+// _Z2piIdE
+template<class T>
+constexpr T pi = (T)3.1415926535897932385;  // variable template
+
+template<class T>
+T circular_area(T r) // function template
+{
+    return pi<T> * r * r; // pi<T> is a variable template instantiation
+}
+int test_generic_variable()
+{
+       float a0 = circular_area<float>(2.0f);
+    printf("area<float>(%g) := %g\n", 2.0f, a0);
+    double a2 = circular_area<double>(3.0);
+
+    printf("area<double>(%g) := %g\n", 3.0, a2);
+    return 0;
+}
+
+int main()
+{
+    test_generic_variable();
+    return 0;
+}

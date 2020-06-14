@@ -1,0 +1,22 @@
+extern "C" int32 printf(const char* format, ...);
+
+
+// array arugments: force array to pointer casting
+int foo(int a[3])
+{
+    int sum = 0;
+    return a[0] + a[1] + a[2];
+}
+
+int32 simple()
+{
+    int b[3] = { 1, 2, 3 };
+    int n = foo(b);
+    printf("sum = %d\n", n);
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

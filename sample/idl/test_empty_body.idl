@@ -1,0 +1,18 @@
+
+extern "C" int32 printf(const char* format, ...);
+
+void bar()
+{
+}
+
+int foo()
+{
+}
+
+int main()
+{
+    bar();
+    foo();
+
+    return 0;
+}

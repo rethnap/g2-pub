@@ -1,0 +1,33 @@
+extern "C" int printf(const char* format, ...);
+
+struct basic
+{
+    int a;
+    int b;
+};
+
+#define LOCAL 0
+#define LOCAL_STRUCT 1
+#define CASE LOCAL_STRUCT
+
+#if CASE == LOCAL
+int& simple()
+{
+    // return 1, 2, 3;
+    int a = 3;
+    return a;
+}
+#elif CASE == LOCAL_STRUCT
+basic& simple(basic& B)
+{
+    // basic B;
+    return B;
+}
+#endif
+
+int main()
+{
+    // int a = simple();
+    // printf("result : %d\n", a);
+    return 0;
+}

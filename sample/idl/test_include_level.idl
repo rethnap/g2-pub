@@ -1,0 +1,14 @@
+#include "test_inner.idl"
+
+int simple()
+{
+    printf("%s:include-level: %d\n", "outer", __INCLUDE_LEVEL__);
+
+    inner();
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

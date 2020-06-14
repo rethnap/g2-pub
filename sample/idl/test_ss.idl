@@ -1,0 +1,31 @@
+extern "C" int32 printf(const char* format, ...);
+
+
+int g_a = 1;
+int static_init()
+{
+    printf("%s\n", __FUNCTION__);
+    return ++g_a;
+}
+
+int test_init0()
+{
+    static int a = static_init();
+    return a;
+
+}
+
+int test_init()
+{
+    for (int i = 0; i < 3; ++i) {
+        int k = test_init0();
+        printf("(i, k) = (%d, %d)\n", i, k);
+    }
+    return 0;
+}
+
+int main()
+{
+    test_init();
+    return 0;
+}

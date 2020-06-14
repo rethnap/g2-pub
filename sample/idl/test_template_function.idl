@@ -1,0 +1,56 @@
+
+extern "C" int32 printf(const char* format, ...);
+#define TMPL 1
+#if TMPL
+template <typename T>
+T foo(T a)
+{
+    return a + 1;
+    //return a;
+}
+#else
+int foo(int a)
+{
+    return a + 1;
+}
+#endif
+
+template <typename T> void foo2(typename T::type)
+{
+    printf("foo(T::type)!\n");
+}
+
+template <typename T> void foo2(T)
+{
+    printf("foo(T)!\n");
+}
+
+struct bar {
+    using type = int;
+};
+
+int test_sfinae() {
+    foo2<bar>(2);
+    foo2<int>(2);
+    return 0;
+}
+
+int32 simple()
+{
+    int a;
+    #if TMPL
+    a = foo<int>(3);
+    #else
+    a = foo(3);
+    #endif
+    printf("int: : %d  + 1--> %d\n", 3, a);
+    //printf("f32: : %f + 1 --> %f\n", 3.1f, foo(3.1f));
+    return 0;
+}
+
+int main()
+{
+    simple();
+    test_sfinae();
+    return 0;
+}

@@ -1,0 +1,8 @@
+extern "C" int32 printf(const char* format, ...);
+
+void explode(void) __attribute__((deprecated("boom!")));
+
+int simple()
+{
+    return 0;
+}

@@ -1,0 +1,39 @@
+namespace std {
+template <class _Tp> _Tp&& __declval(int);
+template <class _Tp> _Tp   __declval(long);
+}
+
+template <class _Tp>
+decltype(std::__declval<_Tp>(0))
+declval() noexcept;
+
+template <class _Tp>
+struct numeric_type
+{
+   static void __test(...);
+   static float __test(float);
+   static double __test(char);
+   static double __test(int);
+   static double __test(unsigned);
+   static double __test(long);
+   static double __test(unsigned long);
+   static double __test(long long);
+   static double __test(unsigned long long);
+   static double __test(double);
+   static long double __test(long double);
+
+   typedef decltype(__test(declval<_Tp>())) type;
+   static const bool value = true;
+};
+
+
+template <>
+struct numeric_type<void>
+{
+   static const bool value = false;
+};
+
+int main()
+{
+    return 0;
+}

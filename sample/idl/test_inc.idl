@@ -1,0 +1,22 @@
+#include "common.idl"
+
+int32 simple()
+{
+   int32 a[8];
+
+    int32* c = a;
+    for (int32 i = 0; i < 8; ++i) {
+       *(c++) = i;
+    }
+    for (int32 j = 0; j < 8; ++j) {
+       printf("a[%d] = %d\n", j, a[j]);
+
+    }
+
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

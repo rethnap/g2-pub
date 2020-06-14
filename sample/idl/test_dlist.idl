@@ -1,0 +1,23 @@
+
+extern "C" int32 printf(const char* format, ...);
+
+
+typedef int int_type, *intptr_type;
+int foo()
+{
+    int a, b = 4;
+
+    a = 3;
+    printf("(a, b) = (%d, %d)\n", a, b);
+
+    intptr_type p = &a;
+    printf("(*p,[0]) = (%d:%d)\n", *p, p[0]);
+
+    return 0;
+}
+
+int main()
+{
+    foo();
+    return 0;
+}

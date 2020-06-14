@@ -1,0 +1,61 @@
+extern "C" int printf(const char* format, ...);
+int foo(int* k)
+{
+    printf("%s\n", __PRETTY_FUNCTION__);
+    return 0;
+}
+
+namespace ns {
+struct bar {
+    bar()
+    {
+        printf("%s\n", __PRETTY_FUNCTION__);
+    }
+    ~bar()
+    {
+        printf("%s\n", __PRETTY_FUNCTION__);
+    }
+
+    operator float()
+    {
+        printf("%s\n", __PRETTY_FUNCTION__);
+        return 3.14f;
+    }
+    bar* operator++()
+    {
+        printf("%s\n", __PRETTY_FUNCTION__);
+        return this;
+    }
+
+   bar& operator--()
+   {
+        printf("%s\n", __PRETTY_FUNCTION__);
+        return *this;
+   }
+
+};
+}
+
+double operator"" _mi(long double v)
+{
+    printf("%s\n", __PRETTY_FUNCTION__);
+    return (double)v * 1.69034;
+}
+
+// km
+double operator"" _km(long double v)
+{
+    printf("%s\n", __PRETTY_FUNCTION__);
+    return (double)v;
+}
+int main()
+{
+    foo(nullptr);
+    ns::bar B;
+    B.operator float();
+    ++B;
+    --B;
+    auto pitch = 93.0_mi;
+    printf("93mi := %gkm\n", pitch);
+    return 0;
+}

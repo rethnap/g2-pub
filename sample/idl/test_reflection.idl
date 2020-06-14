@@ -1,0 +1,23 @@
+
+extern "C" int32 printf(const char* format, ...);
+#if !__idlidl__
+#error idl only!
+#endif
+
+struct bar {
+    int a;
+    int b;
+};
+
+int main()
+{
+
+    const char* name = bar.$type.name();
+    printf("name of bar := %s\n", name);
+    int n = 0;
+    for (auto v : bar.$type.variables()) {
+        nprintf("%d: %s", n++, m.name);
+    }
+
+    return 0;
+}

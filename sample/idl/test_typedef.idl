@@ -1,0 +1,37 @@
+#if !__idlidl__
+#include <type_traits>
+
+#endif
+
+template <typename T>
+struct remove_reference
+{
+    #if __idlidl__
+    typedef __remove_reference(T) type;
+    #else
+    typedef typename std::remove_reference<T>::type type;
+    #endif
+};
+
+template <class T>
+inline
+typename remove_reference<T>::type&&
+move(T&& __t) noexcept
+{
+    typedef typename remove_reference<T>::type U;
+    return static_cast<U&&>(__t);
+}
+template <typename T>
+struct  aligned_storage
+{
+    typedef typename remove_reference<T>::type _Aligner;
+    union type {
+        _Aligner __aling;
+        char __data[256];
+    };
+};
+
+int main()
+{
+    return 0;
+}

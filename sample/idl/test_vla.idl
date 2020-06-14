@@ -1,0 +1,59 @@
+
+extern "C" int32 printf(const char* format, ...);
+#define RANK 1
+#if RANK == 1
+int vla(int n)
+{
+    int a[n];
+    int64 s = sizeof(a);
+    printf("size of int a[%d] is %ld\n", n, s);
+    for (int i = 0; i < n; ++i) {
+        a[i] = i;
+    }
+    for (int i = 0; i < n; ++i) {
+        // a[i] = i;
+        printf("a[%d] = %d\n", i, a[i]);
+    }
+    return 0;
+}
+#else
+int vla2(int n, int m)
+{
+    int a[n][m];
+    int64 s = sizeof(a);
+    printf("size of int a[%d][%d] is %ld\n", n, m, s);
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            a[i][j] = i * m + j;
+        }
+    }
+    printf("{\n");
+    for (int i = 0; i < n; ++i) {
+        printf("    ");
+        for (int j = 0; j < m; ++j) {
+            printf("%4d,", a[i][j]);
+        }
+        printf("\n");
+    }
+    printf("}\n");
+
+    return 0;
+}
+#endif
+
+int main()
+{
+#if RANK == 1
+    // vla(-1);
+    // vla(0);
+    vla(2);
+    vla(4);
+    vla(8);
+#else
+    vla2(2,3);
+    // vla2(4,5);
+    // vla2(8, 7);
+#endif
+    return 0;
+}
+

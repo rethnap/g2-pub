@@ -1,0 +1,25 @@
+extern "C" int32 printf(const char* format, ...);
+
+// mile
+double operator"" _mi(long double v)
+{
+    return (double)v * 1.69034;
+}
+
+// km
+double operator"" _km(long double v)
+{
+    return (double)v;
+}
+
+int simple()
+{
+    auto yanagi = 92.0_mi;
+    printf("92mi := %gkm\n", yanagi);
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}

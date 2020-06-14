@@ -1,0 +1,109 @@
+
+extern "C" int32 printf(const char* format, ...);
+
+#define SUBSCRIPT 0
+#define INITIALIZER 1
+template <typename T>
+class vector3
+{
+public:
+    T sum()
+    {
+    #if SUBSCRIPT
+        return v[0] + v[1] + v[2];
+    #else
+        return x + y + z;
+    #endif
+    }
+#if SUBSCRIPT
+    T v[3];
+#else
+    T x;
+    T y;
+    T z;
+#endif
+};
+
+typedef vector3<f32> v3f;
+typedef vector3<int> v3i;
+
+int32 test_vec3()
+{
+    {
+#if SUBSCRIPT
+#if INITIALIZER
+        v3f c = {{ 1.2f, 2.3f, 3.4f }};
+#else
+        v3f c;
+        c.v[0] = 1.2f;
+        c.v[1] = 2.3f;
+        c.v[2] = 3.4f;
+#endif
+
+        printf("a= (%f, %f, %f)\n", c.v[0], c.v[1], c.v[2]);
+#else
+        v3f c;
+        c.x = 1.2f;
+        c.y = 2.3f;
+        c.z = 3.4f;
+        printf("a= (%f, %f, %f)\n", c.x, c.y, c.z);
+#endif
+        f32 s = c.sum();
+        printf("sum is %f\n", s);
+    }
+    {
+#if SUBSCRIPT
+        // v3i b = { 1, 2, 3 };
+        v3i b;
+        b.v[0] = 1;
+        b.v[1] = 2;
+        b.v[2] = 3;
+        printf("b= (%d, %d, %d)\n", b.v[0], b.v[1], b.v[2]);
+#else
+        v3i b;
+        b.x = 1;
+        b.y = 2;
+        b.z = 3;
+        printf("b= (%d, %d, %d)\n", b.x, b.y, b.z);
+#endif
+        int32 s = b.sum();
+        printf("sum is %d\n", s);
+    }
+    return 0;
+}
+
+template <typename T, T _v>
+struct cbase
+{
+    static constexpr const T value = _v;
+    typedef T value_type;
+      constexpr operator value_type() const {return value;}
+      constexpr value_type operator ()() const {return value;}
+
+};
+
+template <bool _b>
+using bool_constant = cbase<bool, _b>;
+
+int test_alias()
+{
+    typedef bool_constant<false> false_type;
+    bool v2 = false_type::value;
+    printf("false_type: %s\n", v2 ? "true" : "false");
+
+   typedef bool_constant<true> true_type;
+
+    bool v = true_type::value;
+    printf("true_type: %s\n", v ? "true" : "false");
+
+
+    return 0;
+
+}
+
+int main()
+{
+    test_vec3();
+    test_alias();
+    return 0;
+}

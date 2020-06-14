@@ -1,0 +1,30 @@
+
+extern "C" int32 printf(const char* format, ...);
+
+int test_unused()
+{
+    int a = 1;
+ #if 1
+    // expression-statement of a literal --> UNUSED
+    true;
+    // expression-statement of literals --> UNUSED
+    false, 3;
+    // function-call --> USED
+    printf("hello\n");
+    #endif
+    // expression-statement of  assignment op -->USED
+    a *= 7;
+
+    // expression-statement of  non assignment op -->UNUSED
+    a + 4;
+int v[2];
+v[0];
+
+    return 0;
+}
+
+int main()
+{
+    test_unused();
+    return 0;
+}

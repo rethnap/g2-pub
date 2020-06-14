@@ -1,0 +1,87 @@
+extern "C" int printf(const char* format, ...);
+
+enum class greek : int {
+    alpha = 0,
+    beta,
+    xam
+};
+
+class abstract {
+public:
+    virtual int foo() = 0;
+    int a = 3;
+};
+
+class concrete : public abstract {
+public:
+    int foo() final
+    {
+        return 0;
+    }
+    int a = 3;
+};
+
+class basic {
+public:
+    int a = 3;
+};
+
+class virt {
+public:
+    virtual ~virt()
+    {
+    }
+    virtual int foo()
+    {
+        return 0;
+    }
+};
+
+struct bar {
+    int a = 4;
+};
+
+union variant {
+    int a;
+    float b;
+};
+
+struct empty {
+};
+
+struct exception {
+    ~exception() noexcept(false)
+    {
+        throw "hello";
+    }
+};
+
+const char* b2s(bool v)
+{
+    return v ? "true" : "false";
+}
+#define str(x) #x
+
+
+#define is_polymorphic(x) \
+    printf("%s is polymorphic(%s)\n", #x, b2s(__is_polymorphic(x)));
+
+
+int simple()
+{
+    greek g = greek::alpha;
+
+    is_polymorphic(abstract);
+    is_polymorphic(concrete);
+    is_polymorphic(basic);
+    is_polymorphic(greek);
+    is_polymorphic(basic*);
+    is_polymorphic(empty&);
+
+    return 0;
+}
+
+int main()
+{
+    return simple();
+}
