@@ -1,15 +1,5 @@
 // C2229.cpp
-extern "C++"
-{
-void* operator new(uint64 count) noexcept;
-void* operator new [] (uint64 count) noexcept;
-
-void operator delete(void* ptr);
-void operator delete [] (void* ptr);
-}
-
 struct S {
-
    int a[0];  // C2229  zero-sized array
    int b[1];
 };
