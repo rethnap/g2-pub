@@ -23,7 +23,6 @@ bool is_debugger_present()
     static bool yes = false;
 
     if (!init) {
-        // char name[1024] = {0};
         char name[1024];
         char buffer[1024];
         __builtin_memset(name, 0, sizeof(name));
@@ -50,7 +49,6 @@ bool is_debugger_present()
         close(fd);
 
         yes = strstr(buffer, "gdb") || strstr(buffer, "lldb");
-        // printf("debugger present: %s\n", v);
         init = true;
     }
 
