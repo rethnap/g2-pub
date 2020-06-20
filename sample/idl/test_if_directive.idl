@@ -1,0 +1,74 @@
+// #ifndef _TEST_IF_DIR_IDL
+#define _TEST_IF_DIR_IDL
+// #pragma once
+
+extern "C" int32 printf(const char* format, ...);
+
+#if 0
+
+#define BIAS 24
+//  int BIAS = 12;
+#define HELLO "hello world!\n"
+
+int32 simple()
+{
+    int32 a = 3;
+    int32 b = 4;
+    printf(HELLO);
+
+    int32 ret = a * a + b - BIAS;
+    printf("result: = %d\n", ret);
+    return 0;
+}
+#elif 3 < 2
+int32 simple()
+{
+    int32 a = 3;
+    int32 b = 4;
+    printf("elif part!\n");
+    int32 ret =  a * a + b * b;
+
+     printf("result: = %d\n", ret);
+    return 0;
+}
+
+#else
+#define TEST_PREPROCESS 1
+
+int32 simple()
+{
+    int32 a = 3;
+    int32 b = 4;
+    printf("else part!\n");
+    int32 ret =  a * a - b * b;
+
+     printf("result: = %d\n", ret);
+     #if 0
+        printf("inner 1\n");
+    #else
+        printf("inner 2\n");
+
+    #endif
+    return 0;
+
+}
+
+#endif
+// #endif
+
+
+#if !(__has_feature(cxx_nullptr))
+    #error "hello"
+#  if (__has_extension(cxx_nullptr) || __has_keyword(__nullptr)) && defined(_LIBCPP_ABI_ALWAYS_USE_CXX11_NULLPTR)
+#    define nullptr __nullptr
+    #error "world"
+#  else
+#    define _LIBCPP_HAS_NO_NULLPTR
+    #error 'unreachable'
+#  endif
+#endif
+
+int main()
+{
+    return simple();
+}
