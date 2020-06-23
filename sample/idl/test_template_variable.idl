@@ -13,11 +13,12 @@ T circular_area(T r) // function template
 }
 int test_generic_variable()
 {
-       float a0 = circular_area<float>(2.0f);
+    float a0 = circular_area<float>(2.0f);
     printf("area<float>(%g) := %g\n", 2.0f, a0);
-    double a2 = circular_area<double>(3.0);
 
+    double a2 = circular_area<double>(3.0);
     printf("area<double>(%g) := %g\n", 3.0, a2);
+
     return 0;
 }
 

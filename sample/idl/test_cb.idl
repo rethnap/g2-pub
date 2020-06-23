@@ -1,0 +1,27 @@
+
+extern "C" int32 printf(const char* format, ...);
+#define UNUSED(x) if(x) {}
+
+struct bar {
+    int f(int v)
+    {
+        printf("%s: %d + %d = %d\n", __FUNCTION__, a, v, a + v);
+        return a;
+    }
+    int a = 3;
+};
+
+typedef int (bar::*scb)(int);
+
+int32 main()
+{
+    bar B;
+    bar* p = &B;
+    UNUSED(p)
+    scb CB = &bar::f;
+    (B.*CB)(1);
+    (p->*CB)(2);
+
+    return 0;
+}
+
