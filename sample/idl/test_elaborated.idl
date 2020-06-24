@@ -1,0 +1,36 @@
+extern "C" int printf(const char* format, ...);
+
+class another;
+class base {
+public:
+    bool operator < (another& r);
+    int a = 1;
+};
+
+class another {
+public:
+    bool operator < (base& r)
+    {
+        return b < r.a;
+    }
+    int a = 2;
+    int b = 3;
+};
+
+
+bool base::operator < (another& r)
+{
+    return a < r.a;
+}
+int main()
+{
+    base A;
+    another B;
+    if (A < B) {
+        printf("A < B\n");
+    }
+    bool ok = (B < A);
+    printf("B < A(%s)\n", ok ? "true" : "false");
+
+    return 0;
+}
