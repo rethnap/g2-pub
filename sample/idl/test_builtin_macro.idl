@@ -10,7 +10,7 @@ extern "C" int32 printf(const char* format, ...);
 #define check_cpp_attribute2(x) printf("cpp-attribute(%s) = %ld\n", # x, __has_cpp_attribute(x));
 
 #define check_has_feature(x) printf("has-feature(%s) = %d\n", # x, __has_feature(x));
-int32 simple()
+int32 test_builtin_macro()
 {
     printf("current couner is : %d\n", __COUNTER__);
     printf("current function name is : %s:%d\n", __FUNCTION__, __INCLUDE_LEVEL__);
@@ -53,5 +53,5 @@ int32 simple()
 
 int main()
 {
-    return simple();
+    return test_builtin_macro();
 }

@@ -10,7 +10,16 @@ struct Foo {
 
 struct Empty {};
 
-struct alignas(64) Empty64 {};
+#define CASE 0
+#if CASE == 0
+static constexpr const int ALIGN = 64;
+#elif CASE == 1
+static constexpr const int ALIGN = 63;
+#else
+static constexpr const int ALIGN = 1024 * 1024 * 1024;
+#endif
+
+struct alignas(ALIGN) EmptyAlign {};
 
 int main()
 {
@@ -19,12 +28,12 @@ int main()
     printf("- pointer          : %lu\n" , alignof(int*)    );
     printf("- class Foo        : %lu\n" , alignof(Foo)     );
     printf("- empty class      : %lu\n" , alignof(Empty)   );
-    printf("- alignas(64) Empty: %lu\n" , alignof(Empty64) );
+    printf("- alignas(%d) Empty: %lu\n" , ALIGN, alignof(EmptyAlign) );
     printf("- char             : %lu\n" , __alignof(char)    );
     printf("- pointer          : %lu\n" , __alignof(int*)    );
     printf("- class Foo        : %lu\n" , __alignof(Foo)     );
     printf("- empty class      : %lu\n" , __alignof(Empty)   );
-    printf("- alignas(64) Empty: %lu\n" , __alignof(Empty64) );
+    printf("- alignas(%d) Empty: %lu\n" , ALIGN, __alignof(EmptyAlign) );
 
     return 0;
 }
