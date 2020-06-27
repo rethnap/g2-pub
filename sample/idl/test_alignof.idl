@@ -10,7 +10,10 @@ struct Foo {
 
 struct Empty {};
 
+// #if !defined(CASE)
+#ifndef CASE
 #define CASE 0
+#endif
 #if CASE == 0
 static constexpr const int ALIGN = 64;
 #elif CASE == 1

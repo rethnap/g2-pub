@@ -1,0 +1,10 @@
+
+__attribute__((__noreturn__))
+int foo()
+{
+}
+
+int main()
+{
+    return 0;
+}

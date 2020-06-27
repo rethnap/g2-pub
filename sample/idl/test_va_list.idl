@@ -12,6 +12,7 @@ typedef __builtin_va_list va_list;
 extern "C" int32 vprintf(const char *format, va_list ap);
 //
 
+__attribute__ ((__format__ (__printf__, 1, 2)))
 int format(const char* fmt, ...)
 {
 
@@ -22,13 +23,15 @@ int format(const char* fmt, ...)
     return 0;
 }
 
-int32 simple()
+int32 test_va_list()
 {
     format("%s %d\n", "hello", 3);
+    // format("%s %d\n", "hello", 3.14);
+
     return 0;
 }
 
 int main()
 {
-    return simple();
+    return test_va_list();
 }

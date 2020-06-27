@@ -1,8 +1,6 @@
 
 extern "C" int printf(const char* format, ...);
 
-
-
 int test_format()
 {
     int a = 3;
